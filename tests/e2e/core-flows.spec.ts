@@ -3,9 +3,9 @@ import { expect, test } from '@playwright/test';
 test('60-second scan exposes role, capabilities, work, and contact', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Machine Learning Engineer');
-  await expect(page.getByText('End-to-End AI Engineering')).toBeVisible();
-  await expect(page.getByText('AI Evaluation & Reliability')).toBeVisible();
-  await expect(page.getByText('Privacy-Aware AI Systems')).toBeVisible();
+  await expect(page.getByRole('heading', { level: 3, name: 'End-to-End AI Engineering', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 3, name: 'AI Evaluation & Reliability', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 3, name: 'Privacy-Aware AI Systems', exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: /Connect on LinkedIn/i })).toHaveAttribute('href', /linkedin\.com/);
 });
 

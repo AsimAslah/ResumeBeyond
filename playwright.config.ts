@@ -9,7 +9,7 @@ export default defineConfig({
   webServer: { command: 'npm run start', port: 3000, reuseExistingServer: !process.env.CI },
   projects: [
     { name: 'desktop-chromium', use: { ...devices['Desktop Chrome'] } },
-    { name: 'mobile-390', use: { ...devices['iPhone 13'], viewport: { width: 390, height: 844 } } },
+    { name: 'mobile-webkit-390', use: { ...devices['iPhone 13'], viewport: { width: 390, height: 844 } } },
   ],
 });
 
