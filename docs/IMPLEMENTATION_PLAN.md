@@ -21,9 +21,9 @@ Last updated: 2026-11-14
 
 ## Architecture decision
 
-Use standard Next.js App Router on the Node.js runtime for Replit compatibility, without Vinext, Wrangler, D1, or Cloudflare bindings.
+Use a Vite-built React client and a small native Node.js server for Replit compatibility, without Vinext, Wrangler, D1, or Cloudflare bindings.
 
-- Frontend: Next.js, React, TypeScript, CSS design tokens, accessible client interactions.
+- Frontend: React, TypeScript, Vite, CSS design tokens, accessible client interactions.
 - Content: a typed, curated knowledge registry shared by the pages, citations, and ambassador.
 - Retrieval: deterministic weighted lexical retrieval over a small approved evidence set.
 - Generation: server-side optional OpenAI-compatible call when `OPENAI_API_KEY` is configured; otherwise an explicitly labelled deterministic evidence synthesis.
