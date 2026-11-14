@@ -35,7 +35,7 @@ Status date: 2026-11-14
 - [ ] Live provider data controls reviewed if a model key is enabled
 - [ ] External link checker run against the deployed origin
 - [ ] GitHub Actions completes on the pushed implementation
-- [ ] GitHub issue/PR workflow completed (current connected GitHub integration returned 403 for issue creation)
+- [ ] GitHub issue/PR workflow completed (current connected GitHub integration returned 403 for both issue and PR creation; feature branch is pushed)
 - [ ] v1.0.0 tag and release created after every release gate passes
 
 ## Release blockers

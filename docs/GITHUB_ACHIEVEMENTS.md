@@ -11,7 +11,11 @@ Date: 2026-11-14
 
 ## Permission blocker
 
-Six genuine milestone issue creations were attempted through the connected GitHub integration. GitHub returned `403 Resource not accessible by integration` for each attempt, so no issues were created. The GitHub CLI is not installed in this environment.
+Six genuine milestone issue creations and one implementation pull request creation were attempted through the connected GitHub integration. GitHub returned `403 Resource not accessible by integration` for every write, so no issue or pull request was created. The GitHub CLI is not installed in this environment.
+
+The verified feature branch is pushed and GitHub exposes this review entry point:
+
+https://github.com/AsimAslah/ResumeBeyond/pull/new/codex/recruiter-first-foundation
 
 ## Achievement reporting
 

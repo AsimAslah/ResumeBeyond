@@ -31,7 +31,7 @@ Safe visual ideas, Mini Byte identity, theme concept, public project screenshots
 
 ## 6. GitHub workflow
 
-The sanitized roadmap baseline was pushed to `main`; implementation is on `codex/recruiter-first-foundation`. Issue creation was blocked by GitHub integration permissions (403), and GitHub CLI is unavailable. No issue, pull request, merge, release, or achievement is falsely claimed.
+The sanitized roadmap baseline was pushed to `main`; the verified implementation branch `codex/recruiter-first-foundation` is pushed to GitHub. Issue and pull-request creation were blocked by GitHub integration permissions (403), and GitHub CLI is unavailable. GitHub provided the manual PR entry point `https://github.com/AsimAslah/ResumeBeyond/pull/new/codex/recruiter-first-foundation`. No issue, pull request, merge, release, or achievement is falsely claimed.
 
 ## 7. Measured verification
 
