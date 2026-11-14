@@ -11,4 +11,7 @@ test-results/
 tmp/
 .wrangler/
 .vinext/
+.agents/
+.cache/
+.local/
 
