@@ -26,16 +26,17 @@ Status date: 2026-11-14
 
 ## Pending manual or external verification
 
-- [ ] Replit Design comparison completed
-- [ ] Replit Agent refinement completed
+- [x] Replit Design comparison completed; recruiter-first direction selected
+- [x] Replit Agent refinement completed; premium direction preserved
 - [ ] Public Replit deployment published
 - [ ] Signed-out/private-window public deployment tested
 - [ ] Physical mobile device tested
 - [ ] Friend/recruiter completes a timed 60-second review
 - [ ] Live provider data controls reviewed if a model key is enabled
 - [ ] External link checker run against the deployed origin
-- [ ] GitHub Actions completes on the pushed implementation
-- [ ] GitHub issue/PR workflow completed (current connected GitHub integration returned 403 for both issue and PR creation; feature branch is pushed)
+- [ ] GitHub Actions completes on the pushed implementation (see the pull request checks)
+- [x] GitHub issue created for the recruiter-first browser verification milestone (#3)
+- [ ] Linked feature pull request reviewed and approved
 - [ ] v1.0.0 tag and release created after every release gate passes
 
 ## Release blockers

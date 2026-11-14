@@ -39,7 +39,7 @@ export function RecruiterPortfolio() {
 
       <main className="rfv__main" id="rfv-main">
         <section className="rfv__hero" id="rfv-home">
-          <div>
+          <div id="home">
             <p className="rfv__eyebrow">Recruiter-first · evidence-led</p>
             <p className="rfv__name">Asim Aslah P M</p>
             <h1>Machine Learning Engineer <span>— LLM Applications &amp; Evaluation</span></h1>
@@ -101,7 +101,7 @@ export function RecruiterPortfolio() {
         </section>
 
         <section className="rfv__section rfv__projects" id="rfv-work">
-          <div className="rfv__section-heading">
+          <div className="rfv__section-heading" id="projects">
             <div><p className="rfv__eyebrow">Selected work · six projects</p><h2>Proof before polish.</h2></div>
             <p>Each project separates problem, contribution, approach, documented outcome, status, technologies, and source IDs. Ongoing work is labelled as such.</p>
           </div>
@@ -138,7 +138,7 @@ export function RecruiterPortfolio() {
         </section>
 
         <section className="rfv__section" id="rfv-background">
-          <div className="rfv__section-heading">
+          <div className="rfv__section-heading" id="experience">
             <div><p className="rfv__eyebrow">Background</p><h2>Work and study,<br />clearly separated.</h2></div>
             <p>Professional experience and academic research are labelled separately. Project work is not presented as employment.</p>
           </div>
@@ -159,7 +159,7 @@ export function RecruiterPortfolio() {
         </section>
 
         <section className="rfv__section" id="rfv-skills">
-          <div className="rfv__section-heading">
+          <div className="rfv__section-heading" id="skills">
             <div><p className="rfv__eyebrow">Technical toolkit</p><h2>Selected for the work.</h2></div>
             <p>Technologies and practices grounded in the approved project evidence.</p>
           </div>
