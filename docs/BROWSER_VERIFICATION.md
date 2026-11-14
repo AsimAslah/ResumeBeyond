@@ -54,6 +54,11 @@ Superseded runs are cancelled to avoid unnecessary work.
 Mobile Chromium is interim coverage, **not a substitute for WebKit**. Check the
 pull request's Actions results for the actual Ubuntu WebKit outcome.
 
+GitHub Actions run
+[43641272387](https://github.com/AsimAslah/ResumeBeyond/actions/runs/43641272387)
+passed on the feature branch: 61 regression tests and 11/11 tests in each of
+the desktop Chromium, 390 px mobile Chromium, and 390 px mobile WebKit jobs.
+
 ## Security and privacy review
 
 - The existing privacy scanner passed without changing its exclusions.

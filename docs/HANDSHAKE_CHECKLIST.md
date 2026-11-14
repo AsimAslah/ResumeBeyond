@@ -34,7 +34,7 @@ Status date: 2026-11-14
 - [ ] Friend/recruiter completes a timed 60-second review
 - [ ] Live provider data controls reviewed if a model key is enabled
 - [ ] External link checker run against the deployed origin
-- [ ] GitHub Actions completes on the pushed implementation (see the pull request checks)
+- [x] GitHub Actions passed on the pushed implementation: 61 regression tests and 11 tests each for desktop Chromium, 390 px mobile Chromium, and 390 px mobile WebKit
 - [x] GitHub issue created for the recruiter-first browser verification milestone (#3)
 - [ ] Linked feature pull request reviewed and approved
 - [ ] v1.0.0 tag and release created after every release gate passes
