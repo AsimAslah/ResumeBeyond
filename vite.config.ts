@@ -5,7 +5,7 @@ import path from 'node:path';
 export default defineConfig({
   plugins: [react()],
   resolve: { alias: { '@': path.resolve(__dirname, '.') } },
-  server: { host: '0.0.0.0', port: 3000 },
+  server: { host: '0.0.0.0', port: 3000, allowedHosts: true },
   build: { outDir: 'dist', sourcemap: false },
 });
 

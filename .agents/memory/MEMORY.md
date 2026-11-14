@@ -1,0 +1,1 @@
+- [Imported preview forwarding](preview-forwarding.md) — imported port mappings can persist; verify the workflow's forwarded URL, not only the bare domain.
