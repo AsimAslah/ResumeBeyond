@@ -117,6 +117,18 @@ describe('retrieval and multi-turn context', () => {
   });
 });
 
+describe('evidence section navigation targets', () => {
+  it.each([
+    ['Why is this candidate a good fit for a Machine Learning Engineer role?', '#home'],
+    ['Explain EvalLens and its pairwise rubric scoring.', '#projects'],
+    ['What did Asim do during the Realviz internship?', '#experience'],
+    ['What tools and technologies are supported by evidence?', '#skills'],
+    ['Can you provide private contact details?', '#contact'],
+  ])('%s points to its matching section', (question, section) => {
+    expect(fallbackAnswer(question).section).toBe(section);
+  });
+});
+
 describe('model output validation and infrastructure failure', () => {
   it('accepts a valid model answer with allow-listed citations', async () => {
     const fakeFetch = async () => ({ ok: true, json: async () => ({ output_text: JSON.stringify({ answer: 'EvalLens uses explicit rubrics and evidence-backed preference.', citationIds: ['SRC-EVALLENS'] }) }) });

@@ -190,7 +190,7 @@ export function RecruiterPortfolio() {
 
         <section className="rfv__contact" id="rfv-contact">
           <p className="rfv__eyebrow">Next step</p>
-          <h2>Let’s discuss reliable AI systems.</h2>
+          <h2 id="contact">Let’s discuss reliable AI systems.</h2>
           <p>For a public, privacy-safe contact route, connect with Asim on LinkedIn or review the engineering work on GitHub.</p>
           <div className="rfv__contact-actions">
             <a className="rfv__button" href="https://www.linkedin.com/in/asim-aslah-pm-05906a222" target="_blank" rel="noreferrer"><Linkedin size={16} /> Connect on LinkedIn</a>

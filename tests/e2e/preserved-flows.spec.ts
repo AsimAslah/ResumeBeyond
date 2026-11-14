@@ -31,6 +31,59 @@ for (const question of [
   });
 }
 
+test('Mini Byte section links resolve for all evidence destinations on both designs', async ({ page }) => {
+  const sectionQuestions = [
+    { question: 'Why is this candidate a good fit for a Machine Learning Engineer role?', target: '#home' },
+    { question: 'Explain EvalLens and its pairwise rubric scoring.', target: '#projects' },
+    { question: 'What did Asim do during the Realviz internship?', target: '#experience' },
+    { question: 'What tools and technologies are supported by evidence?', target: '#skills' },
+    { question: 'Can you provide private contact details?', target: '#contact' },
+  ];
+  const questionTargets = new Map(sectionQuestions.map(({ question, target }) => [question, target]));
+  await page.route('**/api/ambassador', async (route) => {
+    const payload = route.request().postDataJSON();
+    const question = payload.messages.at(-1)?.content;
+    const target = questionTargets.get(question);
+    if (!target) {
+      await route.fulfill({ status: 400, contentType: 'application/json', body: JSON.stringify({ error: 'Unexpected test question.' }) });
+      return;
+    }
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        answer: 'Navigation contract test response.',
+        citations: [{
+          id: 'SRC-PORTFOLIO',
+          title: 'Original portfolio repository',
+          url: 'https://github.com/AsimAslah/asim-portfolio',
+          verifiedOn: '2026-11-14',
+          kind: 'portfolio',
+        }],
+        section: target,
+        disclosure: 'Evidence-based fallback; no model-generated claims.',
+      }),
+    });
+  });
+  for (const route of ['/', '/directions/evolution']) {
+    for (const { question, target } of sectionQuestions) {
+      await page.goto(route);
+      await page.getByRole('button', { name: 'Open Mini Byte AI Ambassador' }).click();
+      await page.getByLabel('Ask Mini Byte a recruiter question').fill(question);
+      await page.getByRole('button', { name: 'Send question' }).click();
+      const sectionLink = page.getByRole('link', { name: 'View section →' });
+      await expect(page.getByRole('link', { name: 'SRC-PORTFOLIO', exact: true })).toHaveAttribute('href', 'https://github.com/AsimAslah/asim-portfolio');
+      await expect(sectionLink).toHaveAttribute('href', target);
+      const targetElement = page.locator(target);
+      await expect(targetElement).toHaveCount(1);
+      await sectionLink.click();
+      await expect(page).toHaveURL(new RegExp(`${target}$`));
+      await expect(targetElement).toBeInViewport();
+      await expect(page.getByRole('dialog')).toHaveCount(0);
+    }
+  }
+});
+
 test('project, evidence, contact and local navigation links remain usable', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('link', { name: /Connect on LinkedIn/ })).toHaveAttribute('href', /^https:\/\/www\.linkedin\.com\//);

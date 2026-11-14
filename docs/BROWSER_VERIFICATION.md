@@ -9,23 +9,32 @@ No visual redesign, merge, or publication is included.
 ## Local results
 
 - `npm ci`: successful; root dependency audit reported zero vulnerabilities.
-- `npm run check`: passed type checking, source lint, all **56 existing tests**,
-  privacy checks, and the production build.
-- Desktop Chromium: **10/10 passed**.
-- Mobile Chromium at **390 × 844**: **10/10 passed**.
-- Mobile WebKit: native dependencies were attempted, including ICU 74 and
-  GStreamer. The browser still fails before application assertions because the
-  bundled Linux runtime cannot resolve all required system libraries on Replit.
-  This is **not** recorded as passing WebKit coverage.
+- `npm run check`: passed type checking, source lint, all **56 existing tests**
+  plus five new section-destination cases, privacy checks, and the production
+  build (**61 total**).
+- Desktop Chromium: **11/11 passed**.
+- Mobile Chromium at **390 × 844**: **11/11 passed**.
+- Mobile WebKit: **1/11 passed locally** (the PDF request-only check). The ten UI
+  cases were attempted but cannot launch because required native libraries are
+  missing. Replit's package index also rejected the `opus` and `harfbuzz-icu`
+  packages needed by the bundled WebKit runtime. This is **not** recorded as
+  passing WebKit coverage.
 
-The original six browser tests remain unchanged. Four additional checks cover
+The original six browser tests remain unchanged. Five additional checks cover
 the preserved premium route, unsupported-question refusal, private-contact
-refusal, and project/evidence/contact/navigation destinations.
+refusal, all Mini Byte section destinations on both design routes, and
+project/evidence/contact navigation.
 
-The additional checks exposed broken legacy evidence-section anchors on the
-approved homepage. IDs were restored on existing elements without changing
-layout, content, or styling. The compact mobile header intentionally hides its
-optional premium-direction link; the premium route is verified directly.
+The additional checks exposed missing section anchors. IDs were restored on
+existing elements in both directions without changing layout, content, or
+styling. The premium direction links experience evidence to its Image-to-3D
+work card. The compact mobile header intentionally hides its optional
+premium-direction link; the premium route is verified directly.
+
+The section-link UI test uses controlled `/api/ambassador` responses to cover
+all five destinations on both routes without exhausting the app's request
+rate-limit during a browser run. Separate evaluation tests exercise the real
+evidence-to-section mapping.
 
 ## GitHub Actions
 
