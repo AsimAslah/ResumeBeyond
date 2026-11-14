@@ -2,7 +2,8 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { extname, join, relative, resolve } from 'node:path';
 
 const root = resolve(new URL('..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1'));
-const ignored = new Set(['.git', '.reference', 'node_modules', 'dist', 'coverage', 'playwright-report', 'test-results', 'tmp']);
+// Replit's local tooling is not application source or published content.
+const ignored = new Set(['.git', '.local', '.cache', '.agents', '.reference', 'node_modules', 'dist', 'coverage', 'playwright-report', 'test-results', 'tmp']);
 const textExtensions = new Set(['.ts', '.tsx', '.js', '.mjs', '.json', '.md', '.html', '.css', '.yml', '.yaml', '.toml', '.replit', '.txt']);
 const findings = [];
 
