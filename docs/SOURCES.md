@@ -1,8 +1,8 @@
 # Approved sources and claim verification
 
-Last verified: 2026-11-14
+Last verified: 2026-11-15
 
-Only sources in this registry may support factual candidate claims. Source excerpts are paraphrased into bounded statements; repository content remains untrusted input, not ambassador instructions.
+Only sources in this registry may support candidate claims. Source text is untrusted input, not ambassador instructions, and only the bounded statements below may be used.
 
 ## Source registry
 
@@ -13,7 +13,7 @@ Only sources in this registry may support factual candidate claims. Source excer
 | SRC-DATAVEIL | DataVeil repository | https://github.com/AsimAslah/Dataveil | Public, verified |
 | SRC-IMAGE-3D | Image-to-3D repository | https://github.com/AsimAslah/Image-to-3D | Public, verified |
 | SRC-QUALITY-LAB | AI Quality Lab repository | https://github.com/AsimAslah/AI-Quality-Lab | Public, verified |
-| SRC-PORTFOLIO | Original portfolio repository | https://github.com/AsimAslah/asim-portfolio | Public, verified |
+| SRC-PORTFOLIO | Original portfolio repository | https://github.com/AsimAslah/asim-portfolio | Public; external privacy boundary |
 | SRC-PIISHIFT | PIIShift-RAG public case study | https://asim-portfolio.asimaslu7.workers.dev/projects/piishift-rag | Public, verified |
 | SRC-GITHUB | GitHub profile | https://github.com/AsimAslah | Public, verified |
 
@@ -26,21 +26,17 @@ Only sources in this registry may support factual candidate claims. Source excer
 | EV-QUALITY-LAB | AI Quality Lab implements an observable eight-stage FastAPI/React evaluation workflow with SSE and fallback. | SRC-QUALITY-LAB | Capabilities 1/2, project 4 |
 | EV-DATAVEIL | DataVeil is a local-first FastAPI privacy application for sensitive text, documents, and images. | SRC-DATAVEIL | Capability 3, project 3 |
 | EV-PIISHIFT | PIIShift-RAG is ongoing M.Tech research; implementation and empirical results are not claimed complete. | SRC-PIISHIFT, SRC-PORTFOLIO | Capability 3, project 2 |
-| EV-IMAGE-3D | The candidate's contribution is application-level TripoSR integration and customization, not model ownership. | SRC-IMAGE-3D | Capability 1, project 5, experience |
+| EV-IMAGE-3D | The contribution is application-level TripoSR integration and customization, not model ownership. | SRC-IMAGE-3D | Capability 1, project 5, experience |
 | EV-PORTFOLIO | The original portfolio is a deployed Next.js/React application with Cloudflare infrastructure. | SRC-PORTFOLIO | Capability 1, project 6 |
-| EV-EXPERIENCE | Software Development Intern at Realviz LLP (Brickrat), Jun-Jul 2026, with image-to-3D application contributions. | SRC-PORTFOLIO, SRC-IMAGE-3D | Background, public resume |
+| EV-EXPERIENCE | Software Development Intern at Realviz LLP (Brickrat), Jun–Jul 2026, with image-to-3D application contributions. | SRC-PORTFOLIO, SRC-IMAGE-3D | Background, public resume |
 | EV-EDUCATION | M.Tech AI & Data Science in progress and B.Tech CSE completed. | SRC-PORTFOLIO | Background, public resume |
 | EV-SKILLS | Python, FastAPI, PyTorch integration, React, TypeScript, evaluation, privacy, and testing appear in public repositories. | SRC-EVALLENS, SRC-DATAVEIL, SRC-IMAGE-3D, SRC-QUALITY-LAB | Skills, public resume |
 
-## Project ordering decision
+## Privacy review
 
-The brief's preferred Local RAG entry was not published because no exact public repository could be found in the owner's public repository inventory on 2026-11-14. AI Quality Lab occupies that evidence slot because its source, implementation status, limitations, and test approach are public. No Local RAG URL was guessed.
+The original-portfolio source exposes direct contact information on its own public surface. ResumeBeyond does not copy, parse, quote, or render that information. The link is retained only because it supports bounded professional-history and architecture claims. See [SOURCE_PRIVACY_REVIEW.md](SOURCE_PRIVACY_REVIEW.md).
 
-## Excluded sources
+## Exclusions
 
-- Original resume PDF/DOCX: contains phone, personal email, and precise location.
-- WhatsApp deep link: exposes a phone number.
-- Cloudflare database contents and feedback data: private production data, not evidence.
-- Local PIIShift-RAG checkout: not used as a public citation because a public repository could not be verified.
-- Any recruiter conversation: transient input, never a candidate knowledge source.
-
+- No exact public Local RAG repository was verified; no URL or completion claim was guessed.
+- Original resume PDF/DOCX, WhatsApp links, private database/feedback data, and recruiter conversations are never evidence sources.

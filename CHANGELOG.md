@@ -6,22 +6,29 @@ All notable changes to ResumeBeyond are documented here. The project follows sem
 
 ### Added
 
-- Recruiter-first and portfolio-evolution visual directions
+- Recruiter-first and premium portfolio-evolution visual directions
 - Evidence-backed role match, projects, background, skills, source registry, and privacy-safe contact flow
-- Mini Byte AI Ambassador with multi-turn memory, retrieval, citations, optional model synthesis, deterministic fallback, and refusal behavior
-- Request validation, memory-only rate limiting, provider timeout, citation allow-listing, private-output filtering, security headers, and no-log/no-storage design
-- Privacy-safe one-page public resume
-- 56-case evaluation and HTTP integration suite
-- CI, Replit configuration, documentation, and manual release checklist
+- Mini Byte with multi-turn context, deterministic retrieval, citations, optional model synthesis, and exact refusal behavior
+- Static-file traversal regression coverage for plain, encoded, backslash, sibling-directory, malformed-encoding, null-byte, and symbolic-link escape attempts
+- Expanded prompt-injection and private-output adversarial cases
+- Recursive package-lock dependency audit and credential/privacy scan
+- Public deployment verification script for use after a Replit URL exists
+- CI browser projects for desktop Chromium, 390 px mobile Chromium, and 390 px mobile WebKit
 
-### Removed from the migration
+### Changed
 
-- Cloudflare Worker/Vinext runtime coupling
-- D1 feedback persistence and original production database bindings
-- Original analytics configuration
-- Phone, personal email, WhatsApp, precise location, and original resume files
+- Static delivery now enforces lexical containment and resolved real-path containment before opening a file
+- Replit and CI install from the canonical npm lockfile with `npm ci`
+- Privacy output filtering covers contact links, address/identity data, tokens, credentials, and private-key material
+- Evaluation suite expanded from 61 to 82 tests
+- Source verification metadata and release documentation refreshed on 2026-11-15
+
+### Removed
+
+- Duplicated Replit Design sandbox containing a second application, copied assets, and an isolated vulnerable dependency tree
+- Redundant pnpm lockfile; npm is the sole package manager
+- Cloudflare Worker/Vinext runtime coupling, D1 feedback persistence, analytics, original private-contact data, and original resume files from the migration
 
 ## [1.0.0] - Pending
 
-Release only after public Replit deployment, signed-out verification, Replit Design/Agent review, manual-device QA, and the recruiter 60-second review are complete.
-
+Release only after PR #4 is reviewed and approved, a public Replit deployment passes signed-out verification, required manual Handshake checks are recorded, and release approval is given. No v1.0.0 tag or GitHub Release exists yet.

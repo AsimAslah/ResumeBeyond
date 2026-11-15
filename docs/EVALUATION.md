@@ -1,74 +1,60 @@
 # Evaluation report
 
-Date executed: 2026-11-14
+Date executed: 2026-11-15
 
-## Automated ambassador suite
+## Automated evaluation
 
 Command: `npm test`
 
-Result: **56 passed, 0 failed**.
+Local result: **82 passed, 0 failed**.
 
 | Category | Cases | Result |
 | --- | ---: | --- |
 | Normal grounded questions | 16 | Passed |
 | Unsupported claims | 8 | Passed |
 | Privacy-sensitive questions | 8 | Passed |
-| Prompt injection | 8 | Passed |
+| Prompt injection | 14 | Passed |
 | Retrieval and multi-turn context | 4 | Passed |
-| Model validation and infrastructure failure | 6 | Passed |
+| Section navigation | 5 | Passed |
+| Model validation and infrastructure failure | 11 | Passed |
+| Static-path security | 10 | Passed |
 | HTTP API integration | 6 | Passed |
 
-The suite includes every mandatory salary, relocation, enterprise-client, experience-length, phone, home-address, private-contact, and Handshake injection prompt from the project brief.
+The suite verifies expected evidence retrieval, allow-listed citations, the exact unsupported response, private-topic refusal, adversarial instruction handling, private-output rejection, model failure fallback, multi-turn topic retention, section mapping, health/no-storage behavior, request validation, and path containment. Provider behavior is mocked; no live-model evaluation is claimed.
 
-## What the suite measures
+## Local engineering checks
 
-- expected evidence retrieval;
-- public citation allow-list membership;
-- exact unsupported-response behavior;
-- privacy and injection classification;
-- private-output rejection;
-- invented-citation rejection;
-- provider error, malformed output, and thrown-request fallback;
-- multi-turn topic retention;
-- health/no-storage contract;
-- JSON/content-type/message-size validation;
-- API-level injection refusal.
-
-Model-provider cases are mocked. No live-model evaluation was claimed or billed.
-
-## Other automated checks
-
-| Check | Command | Measured result |
+| Check | Command | Result |
 | --- | --- | --- |
+| Clean dependency install | `npm ci` | Passed; 92 packages audited, 0 vulnerabilities |
 | TypeScript | `npm run typecheck` | Passed |
-| Privacy/secret scan | `npm run check:privacy` | Passed, 0 findings |
-| Production bundle | `npm run build` | Passed; 1,584 modules transformed |
-| Home response | local HTTP check | 200 |
-| Health response | local HTTP check | 200; `chatStorage: false` |
-| Public resume | PDF render/metadata review | One page, no form/JS/encryption, visually passed |
+| Source lint | `npm run lint` | Passed |
+| Privacy/credential scan | `npm run check:privacy` | Passed, 0 findings |
+| Recursive dependency audit | `npm run audit:dependencies` | Passed, retained lockfiles free of high-severity findings |
+| Production bundle | `npm run build` | Passed; 1,585 modules, 38.94 kB CSS, 265.94 kB JS |
 
-## Browser QA
+## Browser coverage
 
-Browser-controlled local production checks completed:
+The Playwright suite contains 11 tests per project and covers:
 
-- 1440 x 900 desktop composition reviewed;
-- 390 x 844 mobile composition reviewed;
-- no horizontal overflow at either checked layout;
-- Mini Byte launcher reduced to 56 x 56 px on mobile after an overlap was discovered;
-- mobile dialog measured within the viewport;
-- grounded answer displayed approved source links;
-- mandatory injection refusal displayed in the browser;
-- reset/close behavior checked;
-- no browser console errors observed during the tested flows.
+- recruiter-first 60-second scan and premium route preservation;
+- grounded citations and all section destinations;
+- exact unsupported, private-contact, and injection refusals;
+- chat reset, close, keyboard focus, and mobile dialog bounds;
+- resume download, LinkedIn/GitHub contact navigation, and responsive overflow.
 
-## Authored but not executed here
+Projects are desktop Chromium, mobile Chromium at 390 × 844, and mobile WebKit at 390 × 844. Local results and GitHub Actions evidence are maintained in [BROWSER_VERIFICATION.md](BROWSER_VERIFICATION.md). WebKit is considered verified only by the Linux GitHub Actions job; no unsupported local WebKit claim is made.
 
-The Playwright specification covers the 60-second scan, Mini Byte citations/reset, mandatory injection, mobile overflow/dialog close, keyboard focus, and resume download on desktop Chromium and a 390 px mobile project. The package registry did not provide the Playwright test package to this workspace, so the authored Playwright suite remains a CI/manual-environment check; equivalent core flows were completed through the visible local browser.
+GitHub Actions run 43660156236 passed the verify job and all three browser jobs on the hardened commit, including 11/11 mobile WebKit tests.
 
-## Known limitations
+## Deterministic versus live-model behavior
 
-- Process-local rate limits are not global across Replit autoscale instances.
-- Lexical retrieval is intentionally simple and optimized for the small curated registry.
-- Live-provider quality, latency, retention, and data-control settings require deployment-time verification.
-- Signed-out public deployment tests have not run because no Replit URL exists yet.
+Without `OPENAI_API_KEY`, Mini Byte performs deterministic lexical retrieval and evidence synthesis. This path is fully exercised and is the guaranteed no-secret fallback. With an authorized key, the server can request strict JSON synthesis from an OpenAI-compatible provider; output still must pass citation and privacy validation or the deterministic response replaces it.
 
+No authorized provider configuration was used for this evaluation, so live-model quality, latency, retention, and account data controls remain unverified.
+
+## Deployment limitations
+
+- No public Replit URL exists, so `npm run verify:deployed -- <url>` has not been run.
+- Signed-out production behavior, public link navigation, and platform secret configuration remain manual deployment checks.
+- Process-local rate limits do not coordinate across autoscaled instances.
