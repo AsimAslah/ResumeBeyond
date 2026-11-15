@@ -57,7 +57,7 @@ test('Mini Byte section links resolve for all evidence destinations on both desi
           id: 'SRC-PORTFOLIO',
           title: 'Original portfolio repository',
           url: 'https://github.com/AsimAslah/asim-portfolio',
-          verifiedOn: '2026-11-14',
+          verifiedOn: '2026-11-15',
           kind: 'portfolio',
         }],
         section: target,

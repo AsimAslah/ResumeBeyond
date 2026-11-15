@@ -1,31 +1,23 @@
 # GitHub workflow and achievement status
 
-Date: 2026-11-14
+Date: 2026-11-15
 
 ## Verified repository activity
 
-- The public `AsimAslah/ResumeBeyond` repository exists and began as an empty repository.
-- A sanitized roadmap baseline was pushed to `main`.
-- Implementation work is isolated on `codex/recruiter-first-foundation`.
-- No original portfolio commit history or credentials were copied.
+- Repository: `AsimAslah/ResumeBeyond`
+- Open feature branch: `feat/recruiter-first-browser-verification`
+- Open pull request: #4
+- Two earlier substantive pull requests (#1 and #2) were merged through normal project work.
+- Issue #3 records the recruiter-first browser-verification milestone.
+- PR #4 remains unmerged and must not be self-merged without approval.
 
-## Permission blocker
+## Achievement evidence
 
-Six genuine milestone issue creations and one implementation pull request creation were attempted through the connected GitHub integration. GitHub returned `403 Resource not accessible by integration` for every write, so no issue or pull request was created. The GitHub CLI is not installed in this environment.
+- **Pull Shark:** the GitHub profile visibly reports Pull Shark ×2. The project has legitimate merged pull-request contributions, but GitHub does not expose a per-badge attribution proving which repository caused each tier. ResumeBeyond therefore reports contribution progress, not exclusive causation.
+- **Quickdraw:** no claim; no artificial rapid-close issue was created.
+- **YOLO:** no claim; no unreviewed self-merge was manufactured.
+- **Pair Extraordinaire:** no claim; no co-author or collaborator was invented.
+- **Galaxy Brain:** no claim; no qualifying Discussion answer was verified.
+- **Starstruck:** no claim; no star threshold was verified.
 
-The verified feature branch is pushed and GitHub exposes this review entry point:
-
-https://github.com/AsimAslah/ResumeBeyond/pull/new/codex/recruiter-first-foundation
-
-## Achievement reporting
-
-- Previously verified achievements: not inspected; no claim made.
-- Pull Shark: no qualifying pull request claimed yet.
-- Quickdraw: no qualifying issue claimed; dummy issues were not created.
-- YOLO: no self-merged pull request claimed.
-- Pair Extraordinaire: no co-author claimed; no collaborator was invented.
-- Galaxy Brain: no Discussion answer claimed.
-- Starstruck: no star threshold claimed.
-
-Achievement awards depend on GitHub's eligibility logic and sometimes external participation. The repository must not claim an award until it is visible on the profile.
-
+Achievements are controlled by GitHub and can change independently of repository documentation. Only badges visible on the profile should be represented as awarded. Security cleanup and PR #4 review should remain meaningful engineering work, not achievement farming.

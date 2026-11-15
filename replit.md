@@ -24,6 +24,8 @@ never in browser-exposed variables. No database is needed.
 
 - `npm run check` runs type checking, source lint, ambassador evaluations,
   the privacy scan, and the production build.
+- `npm run audit:dependencies` recursively audits retained npm lockfiles for
+  high-severity advisories.
 - `/api/health` should return `status: "ok"` and `chatStorage: false`.
 - Check `/`, `/directions/evolution`, and `/Asim_Aslah_Public_Resume.pdf`.
 - `npm run test:e2e` uses the production build on port 3000 and requires
@@ -36,3 +38,5 @@ The existing deployment configuration builds and checks the app, then runs
 The development preview is not a published site. See
 `docs/REPLIT_DEPLOYMENT.md` and `docs/HANDSHAKE_CHECKLIST.md` for the remaining
 release checks; do not mark those checks complete without performing them.
+After publication, run `npm run verify:deployed -- https://<public-domain>`
+from a trusted checkout and repeat the critical flows in a signed-out window.

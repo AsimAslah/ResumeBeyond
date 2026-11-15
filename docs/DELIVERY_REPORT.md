@@ -1,74 +1,45 @@
-# Delivery report
+# Engineering delivery report
 
-Date: 2026-11-14
+Date: 2026-11-15
 
-## 1. Initial inspection
+## Delivered
 
-The destination was an empty public repository. The original portfolio used Next.js/React/Vinext with Cloudflare Workers, D1 feedback, analytics configuration, downloadable resumes, Mini Byte, themes, project cards, tests, and responsive layouts. The original resume and profile exposed phone, personal email, precise location, and WhatsApp data.
+- Recruiter-first portfolio and preserved premium evolution route
+- Six approved-source project narratives and a privacy-safe public resume
+- Mini Byte deterministic retrieval, optional provider synthesis, citations, multi-turn context, navigation, reset, and refusals
+- Traversal-safe Node static server and security regression suite
+- Expanded privacy-output and prompt-injection defenses
+- Recursive dependency, credential, and privacy scans
+- npm-only reproducible CI/Replit installation
+- Desktop Chromium, 390 px mobile Chromium, and 390 px mobile WebKit CI projects
+- Deployment verification script and v1.0.0 release-note draft
 
-## 2. Architecture decisions
+## Optimization
 
-ResumeBeyond uses React, TypeScript, Vite, and a native Node server for Replit compatibility. The small curated knowledge base uses deterministic lexical retrieval. Optional model generation is server-side and validated; the evidence fallback works with no key.
+PR #4 previously carried a generated `artifacts/mockup-sandbox` that duplicated the application, copied public assets, included many unused UI components, and maintained a separate vulnerable dependency tree. It was removed along with the redundant pnpm lockfile. The approved recruiter-first and premium directions remain in production source, and the comparison evidence remains in documentation and Git history.
 
-## 3. Implemented features
+## Measured local verification
 
-Recruiter-first portfolio, alternate portfolio-evolution direction, three evidence-backed capabilities, six project narratives, experience/education/skills/research, approved-source registry, Mini Byte chat, citations, refusal behavior, privacy-safe contact, downloadable public resume, security controls, evaluation suite, CI, and Replit configuration.
+- `npm ci`: passed, 92 packages audited, 0 vulnerabilities
+- `npm test`: 82/82 passed
+- TypeScript and source lint: passed
+- Recursive privacy/credential scan: passed, 0 findings
+- Recursive high-severity dependency audit: passed
+- Vite production build: passed, 1,585 modules
+- Desktop Chromium: 11/11 passed locally
+- Mobile Chromium at 390 px: 11/11 passed locally
+- Mobile WebKit: pending the fresh GitHub Actions run; the prior PR head passed 11/11
 
-## 4. Reused components and assets
+## Security before and after
 
-Safe visual ideas, Mini Byte identity, theme concept, public project screenshots, candidate portrait, favicon, and project narrative structure were reused. Cloudflare runtime/configuration, D1 data, feedback, analytics, original resumes, personal contact data, and Git history were not migrated.
+| Finding | Before | After |
+| --- | --- | --- |
+| Isolated sandbox Zod advisory | High-severity advisory in duplicated non-production lockfile | Duplicated sandbox removed; recursive retained-lockfile audit clean |
+| Static file traversal | Containment logic lacked decoded/backslash/symlink regression evidence | Lexical + real-path containment and 10 security tests |
+| Output privacy | Primarily phone/email patterns | Contact links, address/identity, credential/token, and private-key patterns |
+| Prompt injection | Baseline direct patterns | Expanded override, roleplay, transformation, secret-extraction, and indirect-source cases |
+| Package reproducibility | npm and pnpm lockfiles | npm-only, `npm ci` in CI and Replit |
 
-## 5. Key files
+## Release status
 
-- `server.mjs`: runtime, API, retrieval, guardrails, output validation, static server
-- `components/recruiter-portfolio.tsx`: selected direction
-- `components/evolution-portfolio.tsx`: comparison direction
-- `components/ambassador.tsx`: accessible memory-only chat UI
-- `data/knowledge-base.ts`: typed public evidence and portfolio content
-- `tests/ambassador-evaluation.test.mjs`: 56-case suite
-- `public/Asim_Aslah_Public_Resume.pdf`: privacy-safe public resume
-- `docs/`: architecture, sources, evaluation, privacy, deployment, and challenge evidence
-
-## 6. GitHub workflow
-
-The sanitized roadmap baseline was pushed to `main`; the verified implementation branch `codex/recruiter-first-foundation` is pushed to GitHub. Issue and pull-request creation were blocked by GitHub integration permissions (403), and GitHub CLI is unavailable. GitHub provided the manual PR entry point `https://github.com/AsimAslah/ResumeBeyond/pull/new/codex/recruiter-first-foundation`. No issue, pull request, merge, release, or achievement is falsely claimed.
-
-## 7. Measured verification
-
-- 56/56 ambassador and API tests passed
-- TypeScript passed
-- Privacy/secret scan passed with zero findings
-- Vite production build passed (1,584 modules)
-- Local home and health endpoints returned 200
-- Desktop 1440 x 900 and mobile 390 x 844 browser QA passed after fixing launcher overlap
-- Grounded browser answer, citations, mobile dialog, and injection refusal verified
-- Public resume rendered as one page and passed visual inspection
-
-## 8. Security and privacy
-
-Chat is not stored or logged. Requests are bounded and rate limited. Private and unsupported topics are refused before provider calls. Retrieved text is untrusted. Citations are allow-listed and phone/email-like model output is rejected. Public contact uses LinkedIn/GitHub only.
-
-## 9. Achievement progress
-
-No GitHub achievement is claimed. See `docs/GITHUB_ACHIEVEMENTS.md`.
-
-## 10. Deployment status
-
-Replit configuration is prepared. No public deployment URL exists or is claimed.
-
-## 11. Handshake status
-
-Local implementation requirements are recorded in `docs/HANDSHAKE_CHECKLIST.md`. Replit Design/Agent, public deployment, signed-out verification, physical-device QA, and friend/recruiter review remain pending.
-
-## 12. Remaining blockers
-
-- Replit-specific design and agent steps
-- public Replit deployment and signed-out test
-- external GitHub issue/PR workflow permission
-- CI run on the implementation branch
-- physical mobile and timed recruiter review
-
-## 13. Release readiness
-
-Not ready to tag v1.0.0 until the remaining external/manual gates pass. The codebase is ready for review and Replit import.
-
+Repository engineering is ready for PR review after the current GitHub Actions run passes. v1.0.0 is not ready to publish until PR approval, public Replit deployment, signed-out verification, physical-device QA, timed recruiter review, and explicit user authorization are complete.

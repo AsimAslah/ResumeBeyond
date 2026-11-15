@@ -1,74 +1,60 @@
 # ResumeBeyond implementation plan
 
-Last updated: 2026-11-14
+Last updated: 2026-11-15
 
 ## Guardrails
 
-- Treat `AsimAslah/ResumeBeyond` as a clean, independent public project.
-- Do not modify, merge into, deploy, or connect to the original `asim-portfolio` repository, Worker, D1 database, analytics, or feedback data.
-- Publish only claims tied to the approved source registry. Unsupported questions must return: “I don't have verified information about that.”
-- Never migrate the original resume, telephone/WhatsApp details, residential or precise location data, personal email, credentials, runtime data, or Cloudflare identifiers.
-- Keep ambassador conversations in request and React memory only. Do not log prompts, persist browser chat state, or send chat content to analytics.
-
-## Inspection findings
-
-1. The destination repository is public and empty; the local checkout has no commits or remote.
-2. The original portfolio uses Next.js 16, React 19, TypeScript, Vinext, Tailwind, Cloudflare Workers, D1, Drizzle, and a Cloudflare-only feedback API.
-3. Reusable assets include the Mini Byte visual language, theme controls, responsive project imagery, EvalLens screenshots, and structured project narratives.
-4. Cloudflare configuration, D1 identifiers, feedback persistence, analytics configuration, contact email/WhatsApp links, and existing resume files are not safe migration candidates.
-5. The existing resume exposes a telephone number, personal email, and precise location. It is blocked from publication in ResumeBeyond.
-6. EvalLens and PIIShift-RAG source checkouts are locally available for evidence verification. DataVeil, Image-to-3D, and the original portfolio are public sources. The exact Local RAG repository remains unverified.
+- Keep `AsimAslah/ResumeBeyond` independent from the original portfolio's runtime, database, analytics, feedback data, environment files, and private contact data.
+- Publish only claims tied to the approved source registry.
+- Return “I don't have verified information about that.” for unsupported questions.
+- Keep recruiter conversations in request and React memory only.
+- Preserve both approved design directions and Mini Byte; avoid redesign during hardening.
 
 ## Architecture decision
 
-Use a Vite-built React client and a small native Node.js server for Replit compatibility, without Vinext, Wrangler, D1, or Cloudflare bindings.
+Use a Vite-built React 19 client and native Node.js server, with npm as the single package manager. The application needs no database, Cloudflare binding, or model key. Deterministic lexical retrieval is the reliable baseline; optional provider synthesis is server-side and must pass citation/privacy validation.
 
-- Frontend: React, TypeScript, Vite, CSS design tokens, accessible client interactions.
-- Content: a typed, curated knowledge registry shared by the pages, citations, and ambassador.
-- Retrieval: deterministic weighted lexical retrieval over a small approved evidence set.
-- Generation: server-side optional OpenAI-compatible call when `OPENAI_API_KEY` is configured; otherwise an explicitly labelled deterministic evidence synthesis.
-- Guardrails: request-size limits, schema validation, memory-only rate limiting, prompt-injection detection, privacy-topic refusal, timeout/abort control, citation allow-list validation, and output privacy filtering.
-- State: no database, cookies, local/session storage, telemetry, chat logging, or feedback persistence.
-- Deployment: Replit-compatible `npm run dev` and `npm run start`, platform port binding, `.replit`, and deployment runbook.
+## Milestone status
 
-## Milestones
+### M1 — Sanitized foundation: complete
 
-### M1 — Sanitized foundation
+- Independent Vite/React/Node application and clean source registry
+- Private legacy contact/runtime data excluded
+- Architecture, privacy, source, security, and Replit runbooks
 
-- Create the independent Next.js project and clean Git baseline.
-- Add source registry, claim-to-source table, privacy policy, architecture, and Replit runbook.
-- Migrate only safe visual assets and preserve attribution.
+### M2 — Recruiter-first experience: complete
 
-### M2 — Recruiter-first experience
+- Recruiter-first homepage and premium evolution route
+- Three memorable capabilities and six evidence-backed projects
+- Experience, education, skills, research, public resume, and professional contact actions
+- Replit Design comparison evidence preserved in documentation and production routes
 
-- Implement the selected recruiter-first direction at `/`.
-- Implement the portfolio-evolution alternative at `/directions/evolution` for comparison.
-- Deliver the hero, three evidence-backed capabilities, ordered project evidence, experience, education, skills, research, and professional contact.
+### M3 — Mini Byte ambassador: complete for deterministic mode
 
-### M3 — Mini Byte AI Ambassador
+- Retrieval, cited synthesis, optional provider path, section links, multi-turn context, reset, loading/error states, and mobile behavior
+- Exact unsupported, private-topic, and prompt-injection refusals
+- Live-provider quality remains conditional on an authorized provider configuration
 
-- Implement retrieval, evidence synthesis, optional server-side model generation, citations, section links, multi-turn memory, reset, loading/error states, and accessible mobile behavior.
-- Refuse unsupported, private, and injection-based requests.
+### M4 — Evaluation and security: complete for repository scope
 
-### M4 — Evaluation and security
+- 82 unit/integration/security cases
+- Desktop Chromium and 390 px mobile browser projects, including WebKit in GitHub Actions
+- Recursive dependency and credential/privacy scans
+- Traversal-safe static serving and adversarial output/injection coverage
 
-- Add at least 40 normal, unsupported, adversarial, privacy, multi-turn, and infrastructure-failure cases.
-- Add unit, integration, API, and browser tests plus secret, privacy, resume-download, and broken-link checks.
-- Record measured results only after commands execute successfully.
+### M5 — Release preparation: engineering complete; external gates pending
 
-### M5 — Release preparation
-
-- Generate and visually verify a privacy-safe public resume using verified claims and LinkedIn/GitHub contact only.
-- Add CI, changelog, contribution/security docs, Handshake checklist, and v1.0.0 release notes.
-- Validate production build and local responsive/accessibility behavior.
-- Keep Replit Design comparison, Replit Agent refinement, physical-device checks, friend review, public deployment, signed-out verification, and GitHub achievement awards pending until actually completed.
+- CI, changelog, release-note draft, deployment guide, Handshake checklist, and deployment verifier are present
+- Replit publication, signed-out verification, physical-device QA, timed recruiter review, PR approval, and release authorization remain external/manual
 
 ## Release gates
 
-- No leaked private contact information or credentials.
-- All public claims map to the approved source registry.
-- Ambassador privacy, refusal, citation, and prompt-injection tests pass.
-- Production build, automated tests, browser smoke tests, and public-resume download pass.
-- Public Replit URL is live and signed-out tested.
-- Manual Handshake checks are completed and recorded truthfully.
-
+- [x] No private contact information or credentials in the repository or generated resume
+- [x] Public claims map to approved evidence
+- [x] Grounding, citation, refusal, privacy, prompt-injection, and traversal tests pass locally
+- [x] TypeScript, lint, dependency audit, privacy scan, and production build pass locally
+- [ ] Current pushed commit passes all GitHub Actions jobs
+- [ ] PR #4 receives human review/approval
+- [ ] Public Replit URL passes `npm run verify:deployed -- <url>` while signed out
+- [ ] Physical-device and timed recruiter checks are recorded
+- [ ] User approves merge and v1.0.0 publication
