@@ -21,7 +21,7 @@ Flows cover the recruiter scan, premium route, grounded citations, all five sect
 - Mobile Chromium 390: **11/11 passed locally** on 2026-11-15.
 - Mobile WebKit is not claimed locally; verification is delegated to the Ubuntu GitHub Actions job with Playwright-managed native dependencies.
 
-The prior PR head passed all 11 tests in desktop Chromium, mobile Chromium, and mobile WebKit on GitHub Actions. The current security/documentation commit must earn a fresh green run before PR #4 is described as merge-ready.
+GitHub Actions run [43660156236](https://github.com/AsimAslah/ResumeBeyond/actions/runs/43660156236) passed on commit `070c668`: **11/11** in desktop Chromium, **11/11** in mobile Chromium, and **11/11** in mobile WebKit. The verify job also passed the recursive dependency audit and complete repository check.
 
 ## CI behavior
 

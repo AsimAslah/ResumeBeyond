@@ -45,6 +45,8 @@ The Playwright suite contains 11 tests per project and covers:
 
 Projects are desktop Chromium, mobile Chromium at 390 × 844, and mobile WebKit at 390 × 844. Local results and GitHub Actions evidence are maintained in [BROWSER_VERIFICATION.md](BROWSER_VERIFICATION.md). WebKit is considered verified only by the Linux GitHub Actions job; no unsupported local WebKit claim is made.
 
+GitHub Actions run 43660156236 passed the verify job and all three browser jobs on the hardened commit, including 11/11 mobile WebKit tests.
+
 ## Deterministic versus live-model behavior
 
 Without `OPENAI_API_KEY`, Mini Byte performs deterministic lexical retrieval and evidence synthesis. This path is fully exercised and is the guaranteed no-secret fallback. With an authorized key, the server can request strict JSON synthesis from an OpenAI-compatible provider; output still must pass citation and privacy validation or the deterministic response replaces it.

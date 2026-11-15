@@ -30,7 +30,7 @@ The application is prepared for a Node.js 22 Replit deployment and requires no d
 ## Release gates still open
 
 - PR #4 approval and authorized merge
-- green Actions on the release candidate commit
+- final PR review and approval after the green release-candidate Actions run
 - public Replit deployment and automated deployed-origin verification
 - signed-out, physical-mobile, and timed recruiter review
 - explicit approval to create the v1.0.0 tag and GitHub Release

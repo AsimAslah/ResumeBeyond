@@ -28,7 +28,7 @@ PR #4 previously carried a generated `artifacts/mockup-sandbox` that duplicated 
 - Vite production build: passed, 1,585 modules
 - Desktop Chromium: 11/11 passed locally
 - Mobile Chromium at 390 px: 11/11 passed locally
-- Mobile WebKit: pending the fresh GitHub Actions run; the prior PR head passed 11/11
+- Mobile WebKit at 390 px: 11/11 passed in GitHub Actions run 43660156236
 
 ## Security before and after
 
@@ -42,4 +42,4 @@ PR #4 previously carried a generated `artifacts/mockup-sandbox` that duplicated 
 
 ## Release status
 
-Repository engineering is ready for PR review after the current GitHub Actions run passes. v1.0.0 is not ready to publish until PR approval, public Replit deployment, signed-out verification, physical-device QA, timed recruiter review, and explicit user authorization are complete.
+Repository engineering and GitHub Actions are ready for PR review. v1.0.0 is not ready to publish until PR approval, public Replit deployment, signed-out verification, physical-device QA, timed recruiter review, and explicit user authorization are complete.

@@ -44,7 +44,7 @@ Status date: 2026-11-15
 - [x] Static traversal and symlink-escape regression coverage
 - [x] Recursive dependency, credential, and privacy scans
 - [x] npm-only reproducible deployment with `npm ci`
-- [ ] Current pushed commit passes every GitHub Actions job
+- [x] Hardened commit `070c668` passed verify, desktop Chromium, mobile Chromium 390, and mobile WebKit 390 in Actions run 43660156236
 
 ## Publication and release
 

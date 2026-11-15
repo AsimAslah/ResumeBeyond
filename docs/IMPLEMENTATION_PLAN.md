@@ -53,7 +53,7 @@ Use a Vite-built React 19 client and native Node.js server, with npm as the sing
 - [x] Public claims map to approved evidence
 - [x] Grounding, citation, refusal, privacy, prompt-injection, and traversal tests pass locally
 - [x] TypeScript, lint, dependency audit, privacy scan, and production build pass locally
-- [ ] Current pushed commit passes all GitHub Actions jobs
+- [x] Hardened commit `070c668` passed all GitHub Actions jobs in run 43660156236
 - [ ] PR #4 receives human review/approval
 - [ ] Public Replit URL passes `npm run verify:deployed -- <url>` while signed out
 - [ ] Physical-device and timed recruiter checks are recorded
