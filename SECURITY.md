@@ -29,7 +29,7 @@ Use the repository's **Security** tab to submit a private vulnerability report. 
 
 The removed `artifacts/mockup-sandbox` had an isolated high-severity Zod advisory. It duplicated the production app and was not a runtime dependency; removing the sandbox and its lockfile removed that dependency tree while preserving both production design routes and written Replit comparison evidence. The retained root dependency audit reports zero vulnerabilities.
 
-The release-candidate worktree was verified with 94 unit/integration/security tests, 14/14 desktop Chromium tests, and 14/14 mobile Chromium tests. Local WebKit cannot launch in the current Nix environment because required native libraries are absent. GitHub Actions run 46067052971 passed all four jobs on security-hardening commit `46406d0`, including mobile WebKit; browser reports were uploaded.
+The application check contains 94 unit/integration/security tests. The release candidate now defines 15 browser tests per project (45 executions across desktop Chromium, 390 px mobile Chromium, and 390 px mobile WebKit); use the latest exact-head PR check for the result. Local Chromium/WebKit launch in this environment is limited by missing native libraries; CI installs the browsers and required libraries, and the prior exact-head browser run passed all three projects.
 
 ## Known limits
 
@@ -38,4 +38,5 @@ The release-candidate worktree was verified with 94 unit/integration/security te
 - An optional model provider receives the current question and curated public evidence when configured. Operators must review provider retention and data controls before enabling it.
 - Live-model behavior is not claimed when no authorized provider configuration is available; deterministic evidence synthesis remains functional.
 - The approved original-portfolio source is an external privacy boundary and currently exposes direct contact information outside ResumeBeyond. The application does not ingest, reproduce, or render that information.
-- The public deployment was checked with read-only GET requests, but its serving commit is not exposed by deployment metadata. The full deployed verifier was not run because it sends Mini Byte POST requests that could invoke a paid provider.
+- Replit exposes no commit-SHA environment variable. Future builds write the Git SHA to `/build-info.json`, and the GET-only `verify:deployed-version` command compares it with an expected commit. The current public deployment predates that endpoint and has not been changed.
+- The full deployed verifier was not run because it sends Mini Byte POST requests that could invoke a paid provider.

@@ -16,7 +16,8 @@ ResumeBeyond is an evidence-grounded visual resume for **Asim Aslah P M**, posit
 - Traversal-safe static delivery with lexical and resolved-path containment, including symlink escape protection
 - No chat database, cookies, analytics, browser chat persistence, or prompt/response logging
 - Privacy-safe downloadable public resume with LinkedIn and GitHub contact routes only
-- 94 ambassador, security, and HTTP tests plus 14 Playwright tests each for desktop Chromium, 390 px mobile Chromium, and 390 px mobile WebKit
+- 94 ambassador, security, and HTTP tests plus 15 Playwright tests each for desktop Chromium, 390 px mobile Chromium, and 390 px mobile WebKit
+- Build-stamped source identity at `/build-info.json` with a GET-only deployment verifier
 - Reproducible npm deployment, recursive dependency and credential scans, GitHub Actions, and Replit configuration
 
 ## Architecture
@@ -105,7 +106,9 @@ The `.replit` file builds with `npm ci && npm run audit:dependencies && npm run 
 
 A public deployment currently exists at [resume-beyond.replit.app](https://resume-beyond.replit.app). Read-only checks on 2026-11-28 returned valid HTML for both routes, a healthy no-storage endpoint, a canonical sitemap, and the public PDF. The deployment service does not expose the serving source commit, so these checks do not establish that the current PR code is deployed. No deployment settings were changed.
 
-The full deployed verifier was not run because it sends two Mini Byte POST requests that could invoke a paid model provider. Mini Byte conversations, citations, and refusals are covered by local tests and CI without a paid provider call. Signed-out browser review, physical-device QA, and a timed recruiter review remain manual release gates.
+The current public deployment returns the SPA HTML rather than commit JSON at `/build-info.json`; it predates the build-identity file. Future builds create that file from the checked-out Git SHA, and `npm run verify:deployed-version -- https://resume-beyond.replit.app <full-commit-sha>` checks it with one GET request. No deployment settings or production build were changed.
+
+The full deployed verifier was not run because it sends two Mini Byte POST requests that could invoke a paid model provider. Mini Byte conversations, citations, and refusals are covered by local tests and CI without a paid provider call. Signed-out interaction, physical-device QA, PDF accessibility, and a timed recruiter review remain manual release gates.
 
 ## Project status
 

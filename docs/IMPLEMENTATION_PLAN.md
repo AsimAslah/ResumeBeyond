@@ -39,14 +39,14 @@ Use a Vite-built React 19 client and native Node.js server, with npm as the sing
 
 - 94 unit/integration/security cases
 - Desktop Chromium and 390 px mobile browser projects, including WebKit in GitHub Actions
-- 14 browser tests per project; local Chromium checks pass and WebKit is covered by CI
+- 15 browser tests per project; local browser launches depend on native libraries, and CI installs all browser dependencies
 - Recursive dependency, privacy, and credential scans
 - Traversal-safe static serving and SPA fallback, malformed-path, and adversarial output/injection coverage
 
 ### M5 — Release preparation: engineering complete; external gates pending
 
 - CI, changelog, release-note draft, deployment guide, Handshake checklist, and deployment verifier are present
-- An existing public deployment is active; the serving commit is not exposed and no deployment changes are part of this task
+- An existing public deployment is active; the current build has no source marker. Future builds expose a Git SHA at `/build-info.json`; no deployment changes are part of this task
 - Signed-out verification, physical-device QA, timed recruiter review, PR approval, and release authorization remain external/manual
 
 ## Release gates
@@ -55,10 +55,11 @@ Use a Vite-built React 19 client and native Node.js server, with npm as the sing
 - [x] Public claims map to approved evidence
 - [x] Grounding, citation, refusal, privacy, prompt-injection, and traversal tests pass locally
 - [x] TypeScript, lint, dependency audit, privacy scan, and production build pass locally
-- [x] GitHub Actions run 46067052971 passed all four jobs on security-hardening commit `46406d0`, including mobile WebKit
+- [x] GitHub Actions is split into exact-head verification, desktop Chromium, mobile Chromium, and mobile WebKit jobs with retained reports
 - [ ] Reviewer confirms the latest PR-head checks are green before approving merge
 - [ ] PR #4 receives human review/approval
 - [x] Existing public URL passes read-only route, health, sitemap, and PDF checks
 - [ ] Full deployed verifier is run only after ruling out paid model-provider calls
+- [ ] After an authorized publish, verify `/build-info.json` against the intended source SHA
 - [ ] Physical-device and timed recruiter checks are recorded
 - [ ] User approves merge and v1.0.0 publication

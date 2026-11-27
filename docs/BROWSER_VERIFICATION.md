@@ -6,22 +6,21 @@ The suite preserves the selected recruiter-first homepage, the premium route at 
 
 ## Projects and coverage
 
-`playwright.config.ts` defines 14 tests for each project:
+`playwright.config.ts` defines 15 tests for each project:
 
 1. desktop Chromium
 2. mobile Chromium at 390 × 844
 3. mobile WebKit at 390 × 844
 
-Flows cover the recruiter scan, premium route, grounded citations, all five section destinations on both routes, exact unsupported/private/injection refusals, reset/close/focus behavior, resume download, contact destinations, and viewport overflow.
+Flows cover the recruiter scan, premium route, grounded citations, all five section destinations on both routes, exact unsupported/private/injection refusals, reset/close/focus behavior, resume download, contact destinations, viewport overflow, and build-commit identification.
 
 ## Local results
 
 - `npm run check`: passed with 94 unit/integration/security tests and a production build.
-- Desktop Chromium: **14/14 passed locally** on 2026-11-28.
-- Mobile Chromium 390: **14/14 passed locally** on 2026-11-28.
-- Mobile WebKit could not launch locally because required native libraries are missing in this Nix environment. This is an environment limitation, not an application assertion failure.
+- The previous PR head passed 14/14 desktop Chromium and 14/14 mobile Chromium tests locally on 2026-11-28.
+- The current workspace cannot launch Chromium because `libgbm.so.1` is missing; this is an environment limitation before application assertions. Final 15-test browser projects run in GitHub Actions, which installs the browser dependencies.
 
-GitHub Actions run [46067052971](https://github.com/AsimAslah/ResumeBeyond/actions/runs/46067052971) passed on security-hardening commit `46406d0`: the verify job, desktop Chromium, mobile Chromium, and mobile WebKit all passed. Browser reports were uploaded for all three projects. Check the latest PR-head run as well before merging any later changes.
+GitHub Actions runs separate desktop Chromium, mobile Chromium, and mobile WebKit jobs, retains each report, and checks the exact PR head. Use the latest run shown on PR #4 before approval; each project now has 15 tests.
 
 ## CI behavior
 
@@ -29,4 +28,4 @@ GitHub Actions performs `npm ci`, the recursive high-severity dependency audit, 
 
 ## Deployment boundary
 
-The existing public origin is `https://resume-beyond.replit.app`. Read-only GET requests to both design routes, health, sitemap, and the résumé PDF returned 200 on 2026-11-28. Deployment metadata does not expose the serving source SHA, so this does not prove the PR code is deployed. The full `npm run verify:deployed` script was intentionally not run because it sends two Mini Byte POST requests that could incur a paid provider call. Local tests cover Mini Byte conversations, citations, and privacy refusals without a live provider.
+The existing public origin is `https://resume-beyond.replit.app`. Signed-out screenshots and read-only GET checks confirmed both routes and the résumé download. Twelve unique external links were found in the production bundles; 11 returned HTTP 200 to HEAD requests. LinkedIn returned 405 to HEAD and 999 to automated GET, so that contact destination remains inconclusive under automation. Replit deployment metadata does not expose the serving source SHA. The current deployment returns HTML rather than JSON at `/build-info.json`, because it predates build identity stamping; the next authorized build will provide the SHA, verifiable with `npm run verify:deployed-version -- https://resume-beyond.replit.app <full-commit-sha>`. The full `npm run verify:deployed` script was not run because it sends two Mini Byte POST requests that could incur a paid provider call. Mobile visual review of the live deployment and interactive signed-out review remain manual.

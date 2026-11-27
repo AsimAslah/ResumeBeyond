@@ -21,18 +21,19 @@ ResumeBeyond turns a static résumé into a recruiter-first, evidence-grounded p
 - Private-output filtering extended to contact links, address/identity data, credentials, tokens, and private keys
 - Recursive dependency, privacy, and credential scans
 - 94 ambassador, integration, and security tests
-- 14 Playwright tests in each desktop Chromium, 390 px mobile Chromium, and 390 px mobile WebKit CI project
+- 15 Playwright tests in each desktop Chromium, 390 px mobile Chromium, and 390 px mobile WebKit CI project (45 CI executions)
 - npm-only reproducible builds using `npm ci`
+- Build-stamped source SHA at `/build-info.json` with a GET-only verification command
 
 ## Deployment
 
-The application has an existing public deployment at `https://resume-beyond.replit.app` and requires no database or AI key. The serving commit is not exposed by deployment metadata; these draft notes do not claim that the current PR is deployed.
+The application has an existing public deployment at `https://resume-beyond.replit.app` and requires no database or AI key. Replit exposes no commit-SHA environment variable. The current deployment predates `/build-info.json` and cannot identify its source; future builds expose their checked-out Git SHA. These draft notes do not claim that the current PR is deployed.
 
 ## Release gates still open
 
 - PR #4 approval and authorized merge
 - final PR review and approval after the green Actions run on the current head
-- confirmation of the serving commit for the existing public deployment
+- an authorized publish followed by a `/build-info.json` comparison against the intended commit
 - full deployed-origin Mini Byte verification after ruling out paid provider calls
 - signed-out, physical-mobile, and timed recruiter review
 - explicit approval to create the v1.0.0 tag and GitHub Release

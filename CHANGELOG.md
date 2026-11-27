@@ -15,6 +15,7 @@ All notable changes to ResumeBeyond are documented here. The project follows sem
 - Regression coverage preserves valid SPA routes and rejects a symlinked fallback outside the distribution root
 - Expanded prompt-injection and private-output adversarial cases
 - Recursive package-lock dependency audit and credential/privacy scan
+- Build-stamped Git source identity at `/build-info.json` plus a GET-only deployment-version verifier
 - Public deployment verification script and read-only origin checks; live Mini Byte checks require confirming no paid provider call can occur
 - CI browser projects for desktop Chromium, 390 px mobile Chromium, and 390 px mobile WebKit
 
@@ -23,8 +24,8 @@ All notable changes to ResumeBeyond are documented here. The project follows sem
 - Static delivery now enforces lexical containment and resolved real-path containment before opening a file
 - Replit and CI install from the canonical npm lockfile with `npm ci`
 - Privacy output filtering covers contact links, address/identity data, tokens, credentials, and private-key material
-- Evaluation suite expanded from 82 to 94 tests; each browser project now covers 14 tests
-- Source verification metadata and release documentation refreshed on 2026-11-15
+- Evaluation suite expanded from 82 to 94 tests; each browser project now covers 15 tests
+- Source-version verification and release documentation refreshed for the current release candidate
 - Final security and release-readiness verification refreshed on 2026-11-28
 
 ### Removed

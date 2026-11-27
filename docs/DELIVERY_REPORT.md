@@ -26,10 +26,9 @@ PR #4 previously carried a generated `artifacts/mockup-sandbox` that duplicated 
 - Recursive privacy/credential scan: passed, 0 findings
 - Recursive dependency audit: passed, 1 retained lockfile, 0 vulnerabilities
 - Vite production build: passed, 1,585 modules
-- Desktop Chromium: 14/14 passed locally on 2026-11-28
-- Mobile Chromium at 390 px: 14/14 passed locally on 2026-11-28
-- Local WebKit: unable to launch because this Nix environment lacks native Playwright dependencies; the failure occurred before application assertions
-- GitHub Actions run 46067052971 passed all four jobs on security-hardening commit `46406d0`, including mobile WebKit; reports were uploaded for all three browser projects
+- Previous PR head: 14/14 desktop Chromium and 14/14 mobile Chromium tests passed locally on 2026-11-28
+- Current local browser launch: blocked before assertions because `libgbm.so.1` is missing from this Nix environment
+- Current branch: 15 browser tests per project (45 executions total); the final exact-head GitHub Actions run is authoritative and retains all three reports
 
 ## Security before and after
 
@@ -43,4 +42,4 @@ PR #4 previously carried a generated `artifacts/mockup-sandbox` that duplicated 
 
 ## Release status
 
-The existing public deployment at `https://resume-beyond.replit.app` returned 200 for read-only checks of both routes, health, sitemap, and the PDF on 2026-11-28. The one-page PDF is text-extractable, but it is untagged; semantic accessibility and screen-reader reading order remain unverified. Its serving commit is not exposed, and the deployment was not changed. The full deployment verifier was skipped because its Mini Byte POST requests could invoke a paid provider. v1.0.0 is not ready to publish until PR approval, signed-out review, PDF accessibility review, physical-device QA, timed recruiter review, and explicit user authorization are complete.
+The existing public deployment at `https://resume-beyond.replit.app` returned 200 for both routes, health, sitemap, and the PDF on 2026-11-28. Signed-out desktop screenshots showed both design directions. Of 12 unique external URLs found in the production bundles, 11 returned HTTP 200 to HEAD requests; LinkedIn returned 405 to HEAD and 999 to automated GET, so it still needs a manual browser check. The current deployment returns the SPA HTML at `/build-info.json`, so it cannot identify its source commit; new builds stamp the commit and expose it through a GET-only verifier, but the live site has not been republished. The one-page PDF is text-extractable, but it has no document-language entry or structure tree and is reported as untagged. Its multi-column reading order is not guaranteed for assistive technology. The exact visual/content-preserving tagged-PDF rebuild was not feasible with the available generator environment, so the PDF was left unchanged. The full deployment verifier was skipped because its Mini Byte POST requests could invoke a paid provider. v1.0.0 remains blocked on signed-out interaction, physical-device QA, PDF accessibility, timed recruiter review, and explicit authorization.

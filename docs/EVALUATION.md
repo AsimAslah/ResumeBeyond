@@ -23,17 +23,17 @@ The suite verifies evidence retrieval, allow-listed citations, exact unsupported
 
 ## Browser coverage
 
-The Playwright suite contains 14 tests per project and covers:
+The Playwright suite contains 15 tests per project and covers:
 
 - recruiter-first 60-second scan and premium route preservation;
 - grounded citations and all section destinations;
 - exact unsupported, private-contact, and injection refusals;
 - chat reset, close, keyboard focus, and mobile dialog bounds;
-- resume download, LinkedIn/GitHub contact navigation, responsive overflow, and requests without console or network errors.
+- resume download, LinkedIn/GitHub contact navigation, responsive overflow, build-commit identity, and requests without console or network errors.
 
-Projects are desktop Chromium, mobile Chromium at 390 × 844, and mobile WebKit at 390 × 844. The latest local desktop Chromium and mobile Chromium runs passed **14/14 each**. Local WebKit could not launch because this Nix environment lacks Playwright's required native libraries (including libxml2, libgbm, and libharfbuzz-icu); the browser failed before application assertions. Do not count that as an application failure or a WebKit pass.
+Projects are desktop Chromium, mobile Chromium at 390 × 844, and mobile WebKit at 390 × 844. Before the build-identity test was added, local desktop Chromium and mobile Chromium passed **14/14 each**. Current local Chromium cannot launch because `libgbm.so.1` is missing; it fails before application assertions. Do not count that as an application failure or a current WebKit pass.
 
-GitHub Actions run [46067052971](https://github.com/AsimAslah/ResumeBeyond/actions/runs/46067052971) passed on security-hardening commit `46406d0`. The verify job passed the dependency audit and full check; desktop Chromium, mobile Chromium, and mobile WebKit jobs all passed, and all three report artifacts were uploaded. Any later PR-head changes must also pass their own current checks before merge.
+GitHub Actions separates the verify/audit/check job from desktop Chromium, mobile Chromium, and mobile WebKit. The latest exact PR-head run is the required verification for the current 15-test projects; all three report artifacts are retained. Do not rely on a previous SHA's results for a later change.
 
 ## Deterministic versus live-model behavior
 
@@ -43,11 +43,11 @@ No authorized provider configuration was used for this evaluation, so live-model
 
 ## Deployment verification and limitations
 
-The existing public deployment is `https://resume-beyond.replit.app` and Replit reports an active deployment with a successful build. Read-only GET checks on 2026-11-28 returned HTTP 200 for `/`, `/directions/evolution`, `/api/health`, `/sitemap.xml`, and `/Asim_Aslah_Public_Resume.pdf`; the PDF was 77,613 bytes with a valid `%PDF-` signature. Deployment metadata does not expose the serving source SHA, so these checks do not prove that the current PR code is deployed.
+The existing public deployment is `https://resume-beyond.replit.app` and Replit reports an active deployment with a successful build. Signed-out screenshots and read-only GET checks on 2026-11-28 confirmed both design routes, health, sitemap, and the PDF. The current deployment returns HTML rather than JSON at `/build-info.json`, so it cannot identify its serving source commit. New builds stamp their checked-out Git SHA at `/build-info.json`; the GET-only `verify:deployed-version` command compares it with an expected SHA after an authorized publish.
 
-The résumé PDF is one page and its text is extractable (3,550 extracted characters). PDF metadata reports that it is not tagged, so semantic structure and screen-reader reading order are not established. No résumé content was changed.
+The résumé PDF is one page, visually intact, and text-extractable (4,437 extracted bytes across 62 lines). PDF metadata reports no tags; the file has no `/Lang` entry or structure tree. Its multi-column reading order is therefore not guaranteed for screen readers. The generator uses ReportLab, which is not installed in this environment, and its current script does not produce tagged structure. Rebuilding with a different PDF engine could change the visual layout or wording, so the PDF was left unchanged and remains an accessibility gate.
 
-The full `npm run verify:deployed` script was not run: it sends two Mini Byte POST requests, and the deployed server could use a paid model provider. Local tests and CI cover Mini Byte fallback conversations, citations, and refusals without a live provider call. External link checks and provider retention controls remain unverified.
+The full `npm run verify:deployed` script was not run: it sends two Mini Byte POST requests, and the deployed server could use a paid model provider. The source-version verifier performs only a GET. Local tests and CI cover Mini Byte fallback conversations, citations, and refusals without a live provider call. Eleven of twelve unique external URLs extracted from the production bundles returned 200 to HEAD; LinkedIn blocks automated checking (405 to HEAD, 999 to GET), so its target needs a manual browser check. Provider retention controls remain unverified.
 
 - Signed-out visual review and physical-device QA remain manual.
 - Process-local rate limits do not coordinate across autoscaled instances.

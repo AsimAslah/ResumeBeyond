@@ -1,4 +1,16 @@
+import { execFileSync } from 'node:child_process';
 import { expect, test } from '@playwright/test';
+
+test('serves the exact source commit used to build the deployment', async ({ request }) => {
+  const response = await request.get('/build-info.json');
+  expect(response.status()).toBe(200);
+  expect(response.headers()['content-type']).toContain('application/json');
+  expect(response.headers()['cache-control']).toBe('no-store');
+  const buildInfo = await response.json();
+  const expectedCommit = process.env.GITHUB_SHA?.trim()
+    || execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+  expect(buildInfo).toEqual({ sourceCommit: expectedCommit });
+});
 
 test('premium direction remains available and returns to the approved homepage', async ({ page }) => {
   await page.goto('/');

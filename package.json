@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "node server.mjs --dev",
-    "build": "vite build",
+    "build": "vite build && node scripts/write-build-info.mjs",
     "start": "node server.mjs",
     "lint": "node scripts/lint.mjs",
     "typecheck": "tsc --noEmit",
@@ -18,6 +18,7 @@
     "check:privacy": "node scripts/privacy-scan.mjs",
     "audit:dependencies": "node scripts/dependency-audit.mjs",
     "verify:deployed": "node scripts/verify-deployment.mjs",
+    "verify:deployed-version": "node scripts/verify-deployment-version.mjs",
     "check": "npm run typecheck && npm run lint && npm run test && npm run check:privacy && npm run build"
   },
   "dependencies": {

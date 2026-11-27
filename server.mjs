@@ -1,6 +1,6 @@
 import { createReadStream, realpathSync, statSync } from 'node:fs';
 import { createServer } from 'node:http';
-import { extname, isAbsolute, relative, resolve, sep } from 'node:path';
+import { basename, extname, isAbsolute, relative, resolve, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
@@ -225,7 +225,9 @@ const mimeTypes = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript
 function serveFile(response, filePath, method = 'GET') {
   const type = mimeTypes[extname(filePath).toLowerCase()] || 'application/octet-stream';
   const headers = securityHeaders(type);
-  headers['Cache-Control'] = extname(filePath) === '.html' ? 'no-store' : 'public, max-age=3600';
+  headers['Cache-Control'] = extname(filePath) === '.html' || basename(filePath) === 'build-info.json'
+    ? 'no-store'
+    : 'public, max-age=3600';
   if (method === 'HEAD') {
     response.writeHead(200, headers);
     return response.end();
