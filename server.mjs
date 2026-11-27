@@ -264,12 +264,13 @@ export function resolveStaticFile(distPath, requestPath) {
   }
 }
 
-export async function createAppServer() {
+export async function createAppServer({ distPath = resolve(root, 'dist') } = {}) {
   let vite;
   if (isDev) {
     const { createServer: createViteServer } = await import('vite');
     vite = await createViteServer({ server: { middlewareMode: true }, appType: 'spa' });
   }
+  const distRoot = resolve(distPath);
 
   return createServer(async (request, response) => {
     const url = new URL(request.url || '/', `http://${request.headers.host || 'localhost'}`);
@@ -286,10 +287,9 @@ export async function createAppServer() {
     }
     if (vite) return vite.middlewares(request, response, () => sendJson(response, 404, { error: 'Not found.' }));
     if (!['GET', 'HEAD'].includes(request.method || 'GET')) return sendJson(response, 405, { error: 'Method not allowed.' });
-    const dist = resolve(root, 'dist');
-    const candidate = resolveStaticFile(dist, url.pathname);
+    const candidate = resolveStaticFile(distRoot, url.pathname);
     if (candidate) return serveFile(response, candidate, request.method);
-    const index = join(dist, 'index.html');
+    const index = join(distRoot, 'index.html');
     if (existsSync(index)) return serveFile(response, index, request.method);
     return sendJson(response, 503, { error: 'Build output is unavailable. Run npm run build.' });
   });

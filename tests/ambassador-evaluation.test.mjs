@@ -1,8 +1,25 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { mkdtempSync, mkdirSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import { request as httpRequest } from 'node:http';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { answerQuestion, classifyQuestion, containsPrivateOutput, createAppServer, fallbackAnswer, resolveStaticFile, retrieveEvidence, sources, unsupportedResponse } from '../server.mjs';
+
+function requestRaw(port, path, method = 'GET') {
+  return new Promise((resolve, reject) => {
+    const request = httpRequest({ host: '127.0.0.1', port, path, method }, (response) => {
+      const chunks = [];
+      response.on('data', (chunk) => chunks.push(chunk));
+      response.on('end', () => resolve({
+        status: response.statusCode,
+        headers: response.headers,
+        body: Buffer.concat(chunks),
+      }));
+    });
+    request.on('error', reject);
+    request.end();
+  });
+}
 
 const normalCases = [
   ['Why is this candidate a good fit for a Machine Learning Engineer role?', 'EV-ROLE'],
@@ -196,18 +213,35 @@ describe('static-file path security', () => {
   let sandbox;
   let dist;
   let outside;
+  let server;
+  let port;
+  let symlinkCreated = false;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     sandbox = mkdtempSync(join(tmpdir(), 'resumebeyond-static-'));
     dist = join(sandbox, 'dist');
     outside = join(sandbox, 'outside');
     mkdirSync(join(dist, 'assets'), { recursive: true });
     mkdirSync(outside, { recursive: true });
     writeFileSync(join(dist, 'assets', 'safe.txt'), 'safe');
+    writeFileSync(join(dist, 'assets', 'safe.svg'), '<svg/>');
+    writeFileSync(join(dist, 'Asim_Aslah_Public_Resume.pdf'), '%PDF-1.4\nfixture\n%%EOF');
+    writeFileSync(join(dist, 'index.html'), 'fixture index');
     writeFileSync(join(outside, 'secret.txt'), 'secret');
+    try {
+      symlinkSync(outside, join(dist, 'escape'), process.platform === 'win32' ? 'junction' : 'dir');
+      symlinkCreated = true;
+    } catch (error) {
+      if (process.platform !== 'win32' || !['EPERM', 'EACCES'].includes(error?.code)) throw error;
+    }
+
+    server = await createAppServer({ distPath: dist });
+    await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+    port = server.address().port;
   });
 
-  afterAll(() => {
+  afterAll(async () => {
+    if (server) await new Promise((resolve, reject) => server.close((error) => error ? reject(error) : resolve()));
     rmSync(sandbox, { recursive: true, force: true });
   });
 
@@ -229,16 +263,45 @@ describe('static-file path security', () => {
   });
 
   it('rejects a symbolic-link escape when the host permits link creation', () => {
-    try {
-      symlinkSync(outside, join(dist, 'escape'), process.platform === 'win32' ? 'junction' : 'dir');
-    } catch (error) {
-      if (error?.code === 'EPERM' || error?.code === 'EACCES') {
-        expect(process.platform).toBe('win32');
-        return;
-      }
-      throw error;
+    if (!symlinkCreated) {
+      expect(process.platform).toBe('win32');
+      return;
     }
     expect(resolveStaticFile(dist, '/escape/secret.txt')).toBeNull();
+  });
+
+  it('serves allowed static files and the resume PDF over HTTP', async () => {
+    const asset = await requestRaw(port, '/assets/safe.svg');
+    expect(asset.status).toBe(200);
+    expect(asset.headers['content-type']).toContain('image/svg+xml');
+    expect(asset.body.toString()).toBe('<svg/>');
+
+    const pdf = await requestRaw(port, '/Asim_Aslah_Public_Resume.pdf');
+    expect(pdf.status).toBe(200);
+    expect(pdf.headers['content-type']).toBe('application/pdf');
+    expect(pdf.body.toString()).toContain('%PDF-1.4');
+
+    const head = await requestRaw(port, '/Asim_Aslah_Public_Resume.pdf', 'HEAD');
+    expect(head.status).toBe(200);
+    expect(head.headers['content-type']).toBe('application/pdf');
+    expect(head.body.length).toBe(0);
+  });
+
+  it.each([
+    '/../outside/secret.txt',
+    '/%2e%2e/outside/secret.txt',
+    '/%2e%2e%2foutside%2fsecret.txt',
+    '/..%5coutside%5csecret.txt',
+    '/..%2fdist-sibling%2fsecret.txt',
+    '/%E0%A4%A',
+    '/assets/safe.txt%00.js',
+    '/escape/secret.txt',
+  ])('does not expose outside files over HTTP for %s', async (requestPath) => {
+    const response = await requestRaw(port, requestPath);
+    expect(response.status).toBe(200);
+    expect(response.headers['content-type']).toContain('text/html');
+    expect(response.body.toString()).toBe('fixture index');
+    expect(response.body.toString()).not.toContain('secret');
   });
 });
 

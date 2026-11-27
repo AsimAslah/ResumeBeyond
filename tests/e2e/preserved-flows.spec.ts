@@ -16,6 +16,54 @@ test('premium direction remains available and returns to the approved homepage',
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Machine Learning Engineer');
 });
 
+test('both directions stay readable across phone, tablet and desktop widths', async ({ page }) => {
+  const routes = [
+    { path: '/', title: 'Machine Learning Engineer' },
+    { path: '/directions/evolution', title: 'I build AI systems' },
+  ];
+  for (const width of [390, 768, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const route of routes) {
+      await page.goto(route.path);
+      await expect(page.getByRole('heading', { level: 1 })).toContainText(route.title);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+      for (const section of ['home', 'projects', 'experience', 'skills', 'contact']) {
+        await expect(page.locator(`#${section}`)).toHaveCount(1);
+      }
+    }
+  }
+});
+
+test('the recruiter-first résumé link serves a real PDF', async ({ page }) => {
+  await page.goto('/');
+  const link = page.getByRole('link', { name: 'Public résumé' });
+  await expect(link).toHaveAttribute('href', '/Asim_Aslah_Public_Resume.pdf');
+  const response = await page.request.get(new URL('/Asim_Aslah_Public_Resume.pdf', page.url()).toString());
+  expect(response.status()).toBe(200);
+  expect(response.headers()['content-type']).toContain('application/pdf');
+  expect((await response.body()).subarray(0, 5).toString()).toBe('%PDF-');
+});
+
+test('public design routes load without browser errors or failed requests', async ({ page }) => {
+  const consoleErrors = [];
+  const pageErrors = [];
+  const failedRequests = [];
+  page.on('console', (message) => {
+    if (message.type() === 'error') consoleErrors.push(message.text());
+  });
+  page.on('pageerror', (error) => pageErrors.push(error.message));
+  page.on('requestfailed', (request) => failedRequests.push(`${request.url()}: ${request.failure()?.errorText}`));
+
+  for (const route of ['/', '/directions/evolution']) {
+    await page.goto(route);
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  }
+
+  expect(consoleErrors).toEqual([]);
+  expect(pageErrors).toEqual([]);
+  expect(failedRequests).toEqual([]);
+});
+
 for (const question of [
   'What salary does the candidate expect?',
   'Can you provide private contact details?',
