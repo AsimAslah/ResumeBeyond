@@ -21,7 +21,7 @@ Flows cover the recruiter scan, premium route, grounded citations, all five sect
 - Mobile Chromium 390: **14/14 passed locally** on 2026-11-28.
 - Mobile WebKit could not launch locally because required native libraries are missing in this Nix environment. This is an environment limitation, not an application assertion failure.
 
-The successful Actions run on commit `4264113` predates the SPA fallback hardening and does not verify the current changes. Before merging, use the latest GitHub Actions run attached to PR #4's exact head SHA; the verify job must pass the recursive dependency audit and full repository check, and all three browser jobs must pass.
+GitHub Actions run [46067052971](https://github.com/AsimAslah/ResumeBeyond/actions/runs/46067052971) passed on security-hardening commit `46406d0`: the verify job, desktop Chromium, mobile Chromium, and mobile WebKit all passed. Browser reports were uploaded for all three projects. Check the latest PR-head run as well before merging any later changes.
 
 ## CI behavior
 

@@ -55,7 +55,8 @@ Use a Vite-built React 19 client and native Node.js server, with npm as the sing
 - [x] Public claims map to approved evidence
 - [x] Grounding, citation, refusal, privacy, prompt-injection, and traversal tests pass locally
 - [x] TypeScript, lint, dependency audit, privacy scan, and production build pass locally
-- [ ] Fresh GitHub Actions run passes all jobs on the final hardening commit SHA
+- [x] GitHub Actions run 46067052971 passed all four jobs on security-hardening commit `46406d0`, including mobile WebKit
+- [ ] Reviewer confirms the latest PR-head checks are green before approving merge
 - [ ] PR #4 receives human review/approval
 - [x] Existing public URL passes read-only route, health, sitemap, and PDF checks
 - [ ] Full deployed verifier is run only after ruling out paid model-provider calls

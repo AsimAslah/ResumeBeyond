@@ -33,7 +33,7 @@ The Playwright suite contains 14 tests per project and covers:
 
 Projects are desktop Chromium, mobile Chromium at 390 × 844, and mobile WebKit at 390 × 844. The latest local desktop Chromium and mobile Chromium runs passed **14/14 each**. Local WebKit could not launch because this Nix environment lacks Playwright's required native libraries (including libxml2, libgbm, and libharfbuzz-icu); the browser failed before application assertions. Do not count that as an application failure or a WebKit pass.
 
-GitHub Actions runs the dependency audit and full check, then runs each browser project separately and retains reports for seven days. The successful run on commit `4264113` predates the SPA fallback hardening and does not verify it. Use the latest PR check run on the exact head SHA for this revision; the current check suite must pass before merge.
+GitHub Actions run [46067052971](https://github.com/AsimAslah/ResumeBeyond/actions/runs/46067052971) passed on security-hardening commit `46406d0`. The verify job passed the dependency audit and full check; desktop Chromium, mobile Chromium, and mobile WebKit jobs all passed, and all three report artifacts were uploaded. Any later PR-head changes must also pass their own current checks before merge.
 
 ## Deterministic versus live-model behavior
 

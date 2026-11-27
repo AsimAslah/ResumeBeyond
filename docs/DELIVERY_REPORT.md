@@ -29,7 +29,7 @@ PR #4 previously carried a generated `artifacts/mockup-sandbox` that duplicated 
 - Desktop Chromium: 14/14 passed locally on 2026-11-28
 - Mobile Chromium at 390 px: 14/14 passed locally on 2026-11-28
 - Local WebKit: unable to launch because this Nix environment lacks native Playwright dependencies; the failure occurred before application assertions
-- Current PR-head WebKit verification must be taken from the fresh Actions run for the final commit, not the earlier run on `4264113`
+- GitHub Actions run 46067052971 passed all four jobs on security-hardening commit `46406d0`, including mobile WebKit; reports were uploaded for all three browser projects
 
 ## Security before and after
 

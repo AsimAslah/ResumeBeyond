@@ -29,7 +29,7 @@ Use the repository's **Security** tab to submit a private vulnerability report. 
 
 The removed `artifacts/mockup-sandbox` had an isolated high-severity Zod advisory. It duplicated the production app and was not a runtime dependency; removing the sandbox and its lockfile removed that dependency tree while preserving both production design routes and written Replit comparison evidence. The retained root dependency audit reports zero vulnerabilities.
 
-The release-candidate worktree was verified with 94 unit/integration/security tests, 14/14 desktop Chromium tests, and 14/14 mobile Chromium tests. Local WebKit cannot launch in the current Nix environment because required native libraries are absent; the PR's latest commit-specific GitHub Actions checks must be used for WebKit verification.
+The release-candidate worktree was verified with 94 unit/integration/security tests, 14/14 desktop Chromium tests, and 14/14 mobile Chromium tests. Local WebKit cannot launch in the current Nix environment because required native libraries are absent. GitHub Actions run 46067052971 passed all four jobs on security-hardening commit `46406d0`, including mobile WebKit; browser reports were uploaded.
 
 ## Known limits
 

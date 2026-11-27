@@ -46,7 +46,8 @@ Status date: 2026-11-28
 - [x] Static traversal, malformed-path, and SPA fallback symlink-escape regression coverage
 - [x] Recursive dependency, credential, and privacy scans
 - [x] npm-only reproducible deployment with `npm ci`
-- [ ] Fresh GitHub Actions run passes all jobs on the final hardening commit SHA
+- [x] GitHub Actions run 46067052971 passed all four jobs on security-hardening commit `46406d0`, including mobile WebKit; browser reports were retained
+- [ ] Reviewer confirms the latest PR-head checks are green before approving merge
 
 ## Publication and release
 
