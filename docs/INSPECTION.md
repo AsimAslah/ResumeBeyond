@@ -1,6 +1,8 @@
 # Initial repository and migration inspection
 
-Date: 2026-11-14
+Original inspection date: 2026-11-14
+
+Current-status correction: 2026-11-15
 
 ## Destination
 
@@ -27,11 +29,11 @@ Date: 2026-11-14
 
 - Cloudflare D1 and Worker bindings do not map directly to the target Replit runtime.
 - The rating/feedback feature is nonessential to the recruiter journey and introduces cookies, IP-derived rate keys, persistent storage, and a separate database dependency. It will be removed.
-- A standard Next.js Node runtime provides the smallest migration path for the website plus server-side ambassador endpoint.
+- The final migration uses a Vite-built React client and a native Node.js server; no Next.js runtime is present in ResumeBeyond.
 
 ## Evidence status
 
 - Verified locally: EvalLens; PIIShift-RAG.
 - Verified public repository identity: DataVeil; Image-to-3D; AI Quality Lab; original portfolio.
-- Pending: exact Local RAG repository; public deployment evidence for projects that do not claim a live demo.
+- No exact Local RAG repository was verified, so it remains excluded rather than guessed. Public Replit deployment evidence remains pending.
 
