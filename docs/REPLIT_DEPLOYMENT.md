@@ -4,18 +4,18 @@ Deployment status: **public deployment active** at `https://resume-beyond.replit
 
 ## Synchronize the branch
 
-Use the clean release-candidate branch and keep the preserved local-only branch separate. In the current workspace:
+Use a separate worktree for release verification so the preserved local-only branch and its `.replit` configuration remain untouched:
 
 ```bash
 git fetch origin
-git switch codex/release-readiness-security
-git status --short --branch
+git worktree add --detach ../resumebeyond-release-verification origin/feat/recruiter-first-browser-verification
+cd ../resumebeyond-release-verification
 npm ci
 npm run check
 npm run audit:dependencies
 ```
 
-Do not pull into the original divergent local branch; it contains local-only configuration commits.
+Do not pull into the original divergent local branch; it contains local-only configuration commits. The separate worktree follows the current PR head without replacing the original working tree's local configuration.
 
 Do not import the original portfolio's D1 database, Worker configuration, analytics token, feedback records, environment files, or legacy resume assets. Use Node.js 22.13 or newer and npm 10 or newer; npm is the only supported package manager.
 
