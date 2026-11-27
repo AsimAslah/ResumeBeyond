@@ -1,13 +1,13 @@
 # Engineering delivery report
 
-Date: 2026-11-15
+Date: 2026-11-28
 
 ## Delivered
 
 - Recruiter-first portfolio and preserved premium evolution route
 - Six approved-source project narratives and a privacy-safe public resume
 - Mini Byte deterministic retrieval, optional provider synthesis, citations, multi-turn context, navigation, reset, and refusals
-- Traversal-safe Node static server and security regression suite
+- Traversal-safe Node static server and security regression suite, including the SPA fallback
 - Expanded privacy-output and prompt-injection defenses
 - Recursive dependency, credential, and privacy scans
 - npm-only reproducible CI/Replit installation
@@ -21,25 +21,26 @@ PR #4 previously carried a generated `artifacts/mockup-sandbox` that duplicated 
 ## Measured local verification
 
 - `npm ci`: passed, 92 packages audited, 0 vulnerabilities
-- `npm test`: 82/82 passed
+- `npm test`: 94/94 passed
 - TypeScript and source lint: passed
 - Recursive privacy/credential scan: passed, 0 findings
-- Recursive high-severity dependency audit: passed
+- Recursive dependency audit: passed, 1 retained lockfile, 0 vulnerabilities
 - Vite production build: passed, 1,585 modules
-- Desktop Chromium: 11/11 passed locally
-- Mobile Chromium at 390 px: 11/11 passed locally
-- Mobile WebKit at 390 px: 11/11 passed in GitHub Actions run 43660156236
+- Desktop Chromium: 14/14 passed locally on 2026-11-28
+- Mobile Chromium at 390 px: 14/14 passed locally on 2026-11-28
+- Local WebKit: unable to launch because this Nix environment lacks native Playwright dependencies; the failure occurred before application assertions
+- Current PR-head WebKit verification must be taken from the fresh Actions run for the final commit, not the earlier run on `4264113`
 
 ## Security before and after
 
 | Finding | Before | After |
 | --- | --- | --- |
 | Isolated sandbox Zod advisory | High-severity advisory in duplicated non-production lockfile | Duplicated sandbox removed; recursive retained-lockfile audit clean |
-| Static file traversal | Containment logic lacked decoded/backslash/symlink regression evidence | Lexical + real-path containment and 10 security tests |
+| Static file and SPA fallback traversal | Assets had containment checks, but the `index.html` fallback bypassed them | Shared lexical + real-path containment; tests cover traversal, malformed paths, and escaping fallback symlinks |
 | Output privacy | Primarily phone/email patterns | Contact links, address/identity, credential/token, and private-key patterns |
 | Prompt injection | Baseline direct patterns | Expanded override, roleplay, transformation, secret-extraction, and indirect-source cases |
 | Package reproducibility | npm and pnpm lockfiles | npm-only, `npm ci` in CI and Replit |
 
 ## Release status
 
-Repository engineering and GitHub Actions are ready for PR review. v1.0.0 is not ready to publish until PR approval, public Replit deployment, signed-out verification, physical-device QA, timed recruiter review, and explicit user authorization are complete.
+The existing public deployment at `https://resume-beyond.replit.app` returned 200 for read-only checks of both routes, health, sitemap, and the PDF on 2026-11-28. The one-page PDF is text-extractable, but it is untagged; semantic accessibility and screen-reader reading order remain unverified. Its serving commit is not exposed, and the deployment was not changed. The full deployment verifier was skipped because its Mini Byte POST requests could invoke a paid provider. v1.0.0 is not ready to publish until PR approval, signed-out review, PDF accessibility review, physical-device QA, timed recruiter review, and explicit user authorization are complete.

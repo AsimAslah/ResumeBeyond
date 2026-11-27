@@ -1,6 +1,6 @@
-import { createReadStream, existsSync, realpathSync, statSync } from 'node:fs';
+import { createReadStream, realpathSync, statSync } from 'node:fs';
 import { createServer } from 'node:http';
-import { extname, isAbsolute, join, relative, resolve, sep } from 'node:path';
+import { extname, isAbsolute, relative, resolve, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
@@ -226,9 +226,28 @@ function serveFile(response, filePath, method = 'GET') {
   const type = mimeTypes[extname(filePath).toLowerCase()] || 'application/octet-stream';
   const headers = securityHeaders(type);
   headers['Cache-Control'] = extname(filePath) === '.html' ? 'no-store' : 'public, max-age=3600';
-  response.writeHead(200, headers);
-  if (method === 'HEAD') return response.end();
-  createReadStream(filePath).pipe(response);
+  if (method === 'HEAD') {
+    response.writeHead(200, headers);
+    return response.end();
+  }
+
+  const stream = createReadStream(filePath);
+  stream.once('open', () => {
+    if (response.destroyed || response.writableEnded) {
+      stream.destroy();
+      return;
+    }
+    response.writeHead(200, headers);
+    stream.pipe(response);
+  });
+  stream.once('error', (error) => {
+    if (response.headersSent || response.destroyed) {
+      response.destroy();
+      return;
+    }
+    const status = error.code === 'ENOENT' ? 404 : 500;
+    sendJson(response, status, { error: status === 404 ? 'Not found.' : 'Unable to read file.' });
+  });
 }
 
 function isWithin(rootPath, candidatePath) {
@@ -237,7 +256,7 @@ function isWithin(rootPath, candidatePath) {
 }
 
 export function resolveStaticFile(distPath, requestPath) {
-  if (!existsSync(distPath)) return null;
+  if (typeof distPath !== 'string' || typeof requestPath !== 'string') return null;
   let decodedPath;
   try {
     decodedPath = decodeURIComponent(requestPath);
@@ -252,12 +271,12 @@ export function resolveStaticFile(distPath, requestPath) {
   const lexicalRoot = resolve(distPath);
   const lexicalCandidate = resolve(lexicalRoot, portablePath);
   if (!isWithin(lexicalRoot, lexicalCandidate)) return null;
-  if (!existsSync(lexicalCandidate) || !statSync(lexicalCandidate).isFile()) return null;
 
   try {
     const realRoot = realpathSync(lexicalRoot);
     const realCandidate = realpathSync(lexicalCandidate);
     if (!isWithin(realRoot, realCandidate)) return null;
+    if (!statSync(realCandidate).isFile()) return null;
     return realCandidate;
   } catch {
     return null;
@@ -273,7 +292,15 @@ export async function createAppServer({ distPath = resolve(root, 'dist') } = {})
   const distRoot = resolve(distPath);
 
   return createServer(async (request, response) => {
-    const url = new URL(request.url || '/', `http://${request.headers.host || 'localhost'}`);
+    let url;
+    let decodedPath;
+    try {
+      url = new URL(request.url || '/', 'http://localhost');
+      decodedPath = decodeURIComponent(url.pathname);
+    } catch {
+      return sendJson(response, 400, { error: 'Invalid request URL.' });
+    }
+    if (decodedPath.includes('\0')) return sendJson(response, 400, { error: 'Invalid request URL.' });
     if (url.pathname === '/api/ambassador') return handleAmbassador(request, response);
     if (url.pathname === '/api/health') return sendJson(response, 200, { status: 'ok', service: 'resumebeyond', chatStorage: false });
     if (url.pathname === '/robots.txt') { response.writeHead(200, securityHeaders('text/plain; charset=utf-8')); return response.end('User-agent: *\nAllow: /\n'); }
@@ -289,8 +316,8 @@ export async function createAppServer({ distPath = resolve(root, 'dist') } = {})
     if (!['GET', 'HEAD'].includes(request.method || 'GET')) return sendJson(response, 405, { error: 'Method not allowed.' });
     const candidate = resolveStaticFile(distRoot, url.pathname);
     if (candidate) return serveFile(response, candidate, request.method);
-    const index = join(distRoot, 'index.html');
-    if (existsSync(index)) return serveFile(response, index, request.method);
+    const index = resolveStaticFile(distRoot, '/index.html');
+    if (index) return serveFile(response, index, request.method);
     return sendJson(response, 503, { error: 'Build output is unavailable. Run npm run build.' });
   });
 }

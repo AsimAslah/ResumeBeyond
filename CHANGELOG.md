@@ -10,9 +10,12 @@ All notable changes to ResumeBeyond are documented here. The project follows sem
 - Evidence-backed role match, projects, background, skills, source registry, and privacy-safe contact flow
 - Mini Byte with multi-turn context, deterministic retrieval, citations, optional model synthesis, and exact refusal behavior
 - Static-file traversal regression coverage for plain, encoded, backslash, sibling-directory, malformed-encoding, null-byte, and symbolic-link escape attempts
+- SPA fallback now applies the same lexical and real-path containment checks as static assets, including protection against an escaping `index.html` symlink
+- Malformed and NUL-containing request paths return a generic 400 response; file-open failures no longer become unhandled stream errors
+- Regression coverage preserves valid SPA routes and rejects a symlinked fallback outside the distribution root
 - Expanded prompt-injection and private-output adversarial cases
 - Recursive package-lock dependency audit and credential/privacy scan
-- Public deployment verification script for use after a Replit URL exists
+- Public deployment verification script and read-only origin checks; live Mini Byte checks require confirming no paid provider call can occur
 - CI browser projects for desktop Chromium, 390 px mobile Chromium, and 390 px mobile WebKit
 
 ### Changed
@@ -20,8 +23,9 @@ All notable changes to ResumeBeyond are documented here. The project follows sem
 - Static delivery now enforces lexical containment and resolved real-path containment before opening a file
 - Replit and CI install from the canonical npm lockfile with `npm ci`
 - Privacy output filtering covers contact links, address/identity data, tokens, credentials, and private-key material
-- Evaluation suite expanded from 61 to 82 tests
+- Evaluation suite expanded from 82 to 94 tests; each browser project now covers 14 tests
 - Source verification metadata and release documentation refreshed on 2026-11-15
+- Final security and release-readiness verification refreshed on 2026-11-28
 
 ### Removed
 

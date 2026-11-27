@@ -6,7 +6,7 @@ The suite preserves the selected recruiter-first homepage, the premium route at 
 
 ## Projects and coverage
 
-`playwright.config.ts` defines 11 tests for each project:
+`playwright.config.ts` defines 14 tests for each project:
 
 1. desktop Chromium
 2. mobile Chromium at 390 × 844
@@ -16,12 +16,12 @@ Flows cover the recruiter scan, premium route, grounded citations, all five sect
 
 ## Local results
 
-- `npm run check`: passed with 82 unit/integration/security tests and a production build.
-- Desktop Chromium: **11/11 passed locally** on 2026-11-15.
-- Mobile Chromium 390: **11/11 passed locally** on 2026-11-15.
-- Mobile WebKit is not claimed locally; verification is delegated to the Ubuntu GitHub Actions job with Playwright-managed native dependencies.
+- `npm run check`: passed with 94 unit/integration/security tests and a production build.
+- Desktop Chromium: **14/14 passed locally** on 2026-11-28.
+- Mobile Chromium 390: **14/14 passed locally** on 2026-11-28.
+- Mobile WebKit could not launch locally because required native libraries are missing in this Nix environment. This is an environment limitation, not an application assertion failure.
 
-GitHub Actions run [43660156236](https://github.com/AsimAslah/ResumeBeyond/actions/runs/43660156236) passed on commit `070c668`: **11/11** in desktop Chromium, **11/11** in mobile Chromium, and **11/11** in mobile WebKit. The verify job also passed the recursive dependency audit and complete repository check.
+The successful Actions run on commit `4264113` predates the SPA fallback hardening and does not verify the current changes. Before merging, use the latest GitHub Actions run attached to PR #4's exact head SHA; the verify job must pass the recursive dependency audit and full repository check, and all three browser jobs must pass.
 
 ## CI behavior
 
@@ -29,4 +29,4 @@ GitHub Actions performs `npm ci`, the recursive high-severity dependency audit, 
 
 ## Deployment boundary
 
-No public origin exists. The repository includes `npm run verify:deployed -- <https-url>` for post-publication health, page, PDF, sitemap, ambassador, and external-link checks. It has not been run and must not be represented as passed until the exact public Replit URL is available.
+The existing public origin is `https://resume-beyond.replit.app`. Read-only GET requests to both design routes, health, sitemap, and the résumé PDF returned 200 on 2026-11-28. Deployment metadata does not expose the serving source SHA, so this does not prove the PR code is deployed. The full `npm run verify:deployed` script was intentionally not run because it sends two Mini Byte POST requests that could incur a paid provider call. Local tests cover Mini Byte conversations, citations, and privacy refusals without a live provider.

@@ -16,22 +16,24 @@ ResumeBeyond turns a static résumé into a recruiter-first, evidence-grounded p
 
 ## Security and quality
 
-- Static-file serving hardened against encoded/backslash traversal, sibling access, and symbolic-link escapes
+- Static-file and SPA fallback delivery hardened against encoded/backslash traversal, sibling access, and symbolic-link escapes
+- Malformed URL and NUL-containing paths return a generic client error; filesystem stream errors do not expose paths
 - Private-output filtering extended to contact links, address/identity data, credentials, tokens, and private keys
 - Recursive dependency, privacy, and credential scans
-- 82 ambassador, integration, and security tests
-- Playwright desktop Chromium, 390 px mobile Chromium, and 390 px mobile WebKit CI projects
+- 94 ambassador, integration, and security tests
+- 14 Playwright tests in each desktop Chromium, 390 px mobile Chromium, and 390 px mobile WebKit CI project
 - npm-only reproducible builds using `npm ci`
 
 ## Deployment
 
-The application is prepared for a Node.js 22 Replit deployment and requires no database or AI key. A public URL will be added only after signed-out verification.
+The application has an existing public deployment at `https://resume-beyond.replit.app` and requires no database or AI key. The serving commit is not exposed by deployment metadata; these draft notes do not claim that the current PR is deployed.
 
 ## Release gates still open
 
 - PR #4 approval and authorized merge
-- final PR review and approval after the green release-candidate Actions run
-- public Replit deployment and automated deployed-origin verification
+- final PR review and approval after the green Actions run on the current head
+- confirmation of the serving commit for the existing public deployment
+- full deployed-origin Mini Byte verification after ruling out paid provider calls
 - signed-out, physical-mobile, and timed recruiter review
 - explicit approval to create the v1.0.0 tag and GitHub Release
 

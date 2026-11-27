@@ -16,7 +16,7 @@ ResumeBeyond is an evidence-grounded visual resume for **Asim Aslah P M**, posit
 - Traversal-safe static delivery with lexical and resolved-path containment, including symlink escape protection
 - No chat database, cookies, analytics, browser chat persistence, or prompt/response logging
 - Privacy-safe downloadable public resume with LinkedIn and GitHub contact routes only
-- 82 ambassador, security, and HTTP tests plus Playwright desktop Chromium, 390 px mobile Chromium, and 390 px mobile WebKit projects
+- 94 ambassador, security, and HTTP tests plus 14 Playwright tests each for desktop Chromium, 390 px mobile Chromium, and 390 px mobile WebKit
 - Reproducible npm deployment, recursive dependency and credential scans, GitHub Actions, and Replit configuration
 
 ## Architecture
@@ -103,11 +103,13 @@ See the [source registry](docs/SOURCES.md), [source privacy review](docs/SOURCE_
 
 The `.replit` file builds with `npm ci && npm run audit:dependencies && npm run check` and runs the Node server on the platform-assigned port. Follow [docs/REPLIT_DEPLOYMENT.md](docs/REPLIT_DEPLOYMENT.md).
 
-No public Replit URL is claimed. Replit publication, signed-out verification, physical-device QA, and a timed recruiter review remain manual release gates.
+A public deployment currently exists at [resume-beyond.replit.app](https://resume-beyond.replit.app). Read-only checks on 2026-11-28 returned valid HTML for both routes, a healthy no-storage endpoint, a canonical sitemap, and the public PDF. The deployment service does not expose the serving source commit, so these checks do not establish that the current PR code is deployed. No deployment settings were changed.
+
+The full deployed verifier was not run because it sends two Mini Byte POST requests that could invoke a paid model provider. Mini Byte conversations, citations, and refusals are covered by local tests and CI without a paid provider call. Signed-out browser review, physical-device QA, and a timed recruiter review remain manual release gates.
 
 ## Project status
 
-The Codex-addressable engineering work is implemented on PR #4. ResumeBeyond is **not v1.0.0 release-ready** until PR approval and the public/manual gates in [docs/HANDSHAKE_CHECKLIST.md](docs/HANDSHAKE_CHECKLIST.md) are completed. Draft release notes are in [docs/RELEASE_NOTES_v1.0.0.md](docs/RELEASE_NOTES_v1.0.0.md); no tag or release has been published.
+The security hardening is being reviewed on PR #4. ResumeBeyond is **not v1.0.0 release-ready** until PR approval and the remaining manual gates in [docs/HANDSHAKE_CHECKLIST.md](docs/HANDSHAKE_CHECKLIST.md) are completed. Draft release notes are in [docs/RELEASE_NOTES_v1.0.0.md](docs/RELEASE_NOTES_v1.0.0.md); no tag or release has been published.
 
 ## License
 

@@ -270,6 +270,35 @@ describe('static-file path security', () => {
     expect(resolveStaticFile(dist, '/escape/secret.txt')).toBeNull();
   });
 
+  it('does not use an index.html symbolic link outside the distribution root', async () => {
+    const escapedDist = join(sandbox, 'escaped-dist');
+    mkdirSync(escapedDist, { recursive: true });
+    try {
+      symlinkSync(join(outside, 'secret.txt'), join(escapedDist, 'index.html'), 'file');
+    } catch (error) {
+      if (process.platform === 'win32' && ['EPERM', 'EACCES'].includes(error?.code)) return;
+      throw error;
+    }
+
+    const fallbackServer = await createAppServer({ distPath: escapedDist });
+    await new Promise((resolve) => fallbackServer.listen(0, '127.0.0.1', resolve));
+    try {
+      const response = await requestRaw(fallbackServer.address().port, '/recruiter/route');
+      expect(response.status).toBe(503);
+      expect(response.headers['content-type']).toContain('application/json');
+      expect(response.body.toString()).not.toContain('secret');
+    } finally {
+      await new Promise((resolve, reject) => fallbackServer.close((error) => error ? reject(error) : resolve()));
+    }
+  });
+
+  it('serves the contained SPA index for a valid client-side route', async () => {
+    const response = await requestRaw(port, '/projects/evallens');
+    expect(response.status).toBe(200);
+    expect(response.headers['content-type']).toContain('text/html');
+    expect(response.body.toString()).toBe('fixture index');
+  });
+
   it('serves allowed static files and the resume PDF over HTTP', async () => {
     const asset = await requestRaw(port, '/assets/safe.svg');
     expect(asset.status).toBe(200);
@@ -293,14 +322,20 @@ describe('static-file path security', () => {
     '/%2e%2e%2foutside%2fsecret.txt',
     '/..%5coutside%5csecret.txt',
     '/..%2fdist-sibling%2fsecret.txt',
-    '/%E0%A4%A',
-    '/assets/safe.txt%00.js',
     '/escape/secret.txt',
   ])('does not expose outside files over HTTP for %s', async (requestPath) => {
     const response = await requestRaw(port, requestPath);
     expect(response.status).toBe(200);
     expect(response.headers['content-type']).toContain('text/html');
     expect(response.body.toString()).toBe('fixture index');
+    expect(response.body.toString()).not.toContain('secret');
+  });
+
+  it.each(['/%E0%A4%A', '/%ZZ', '/assets/safe.txt%00.js'])('rejects malformed HTTP paths with a client error: %s', async (requestPath) => {
+    const response = await requestRaw(port, requestPath);
+    expect(response.status).toBe(400);
+    expect(response.headers['content-type']).toContain('application/json');
+    expect(response.body.toString()).toContain('Invalid request URL.');
     expect(response.body.toString()).not.toContain('secret');
   });
 });

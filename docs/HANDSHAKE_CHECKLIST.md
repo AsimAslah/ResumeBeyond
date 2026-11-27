@@ -1,6 +1,6 @@
 # “Bring Your Resume to Life” challenge checklist
 
-Status date: 2026-11-15
+Status date: 2026-11-28
 
 ## Candidate story and evidence
 
@@ -33,26 +33,29 @@ Status date: 2026-11-15
 - [x] Desktop and 390 px responsive automated coverage
 - [x] Visible focus styles, skip link, and keyboard path
 - [ ] Physical mobile device tested
+- [ ] Résumé PDF tags and assistive-technology reading order reviewed
 - [ ] Friend or recruiter completes a timed 60-second review
 
 ## Engineering and security
 
-- [x] 82 ambassador, integration, and security tests pass locally
+- [x] 94 ambassador, integration, and security tests pass locally
 - [x] TypeScript, lint, privacy scan, dependency audit, and production build pass locally
 - [x] Desktop Chromium and mobile Chromium projects
-- [x] Mobile WebKit project runs in GitHub Actions
-- [x] Static traversal and symlink-escape regression coverage
+- [x] 14/14 local desktop Chromium and 14/14 mobile Chromium tests pass
+- [x] Mobile WebKit project runs in GitHub Actions; local WebKit cannot launch in this Nix environment
+- [x] Static traversal, malformed-path, and SPA fallback symlink-escape regression coverage
 - [x] Recursive dependency, credential, and privacy scans
 - [x] npm-only reproducible deployment with `npm ci`
-- [x] Hardened commit `070c668` passed verify, desktop Chromium, mobile Chromium 390, and mobile WebKit 390 in Actions run 43660156236
+- [ ] Fresh GitHub Actions run passes all jobs on the final hardening commit SHA
 
 ## Publication and release
 
 - [ ] PR #4 reviewed and approved
-- [ ] Public Replit deployment published
-- [ ] Deployment verifier passes against the public URL
+- [x] Existing public Replit deployment is active at `https://resume-beyond.replit.app`
+- [x] Read-only GET checks pass for both routes, health, sitemap, and résumé PDF
+- [ ] Full deployed-origin verifier passes; deferred because it sends Mini Byte POST requests that could invoke a paid provider
 - [ ] Signed-out/private-window verification completed
-- [ ] Repository homepage/README updated with the verified URL
+- [x] README updated with the verified public URL and source-commit limitation
 - [ ] User approves merge and release
 - [ ] v1.0.0 tag and GitHub Release created
 

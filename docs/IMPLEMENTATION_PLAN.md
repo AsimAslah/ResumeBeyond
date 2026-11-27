@@ -1,6 +1,6 @@
 # ResumeBeyond implementation plan
 
-Last updated: 2026-11-15
+Last updated: 2026-11-28
 
 ## Guardrails
 
@@ -37,15 +37,17 @@ Use a Vite-built React 19 client and native Node.js server, with npm as the sing
 
 ### M4 — Evaluation and security: complete for repository scope
 
-- 82 unit/integration/security cases
+- 94 unit/integration/security cases
 - Desktop Chromium and 390 px mobile browser projects, including WebKit in GitHub Actions
-- Recursive dependency and credential/privacy scans
-- Traversal-safe static serving and adversarial output/injection coverage
+- 14 browser tests per project; local Chromium checks pass and WebKit is covered by CI
+- Recursive dependency, privacy, and credential scans
+- Traversal-safe static serving and SPA fallback, malformed-path, and adversarial output/injection coverage
 
 ### M5 — Release preparation: engineering complete; external gates pending
 
 - CI, changelog, release-note draft, deployment guide, Handshake checklist, and deployment verifier are present
-- Replit publication, signed-out verification, physical-device QA, timed recruiter review, PR approval, and release authorization remain external/manual
+- An existing public deployment is active; the serving commit is not exposed and no deployment changes are part of this task
+- Signed-out verification, physical-device QA, timed recruiter review, PR approval, and release authorization remain external/manual
 
 ## Release gates
 
@@ -53,8 +55,9 @@ Use a Vite-built React 19 client and native Node.js server, with npm as the sing
 - [x] Public claims map to approved evidence
 - [x] Grounding, citation, refusal, privacy, prompt-injection, and traversal tests pass locally
 - [x] TypeScript, lint, dependency audit, privacy scan, and production build pass locally
-- [x] Hardened commit `070c668` passed all GitHub Actions jobs in run 43660156236
+- [ ] Fresh GitHub Actions run passes all jobs on the final hardening commit SHA
 - [ ] PR #4 receives human review/approval
-- [ ] Public Replit URL passes `npm run verify:deployed -- <url>` while signed out
+- [x] Existing public URL passes read-only route, health, sitemap, and PDF checks
+- [ ] Full deployed verifier is run only after ruling out paid model-provider calls
 - [ ] Physical-device and timed recruiter checks are recorded
 - [ ] User approves merge and v1.0.0 publication
